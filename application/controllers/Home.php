@@ -8,19 +8,16 @@ class Home extends CI_Controller {
         parent::__construct();
 		if ($this->session->userdata('status') != 'login') {
 			redirect('user/index');
+		}else if ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '1') {
+			redirect('admin/index');
+		}else{
+			$this->load->view('home/index');
 		}
 		$this->load->model('M_User');
-		$this->load->model('M_Pasien');
     }
 
 	public function index()
 	{
-		if ($this->session->userdata('status') != 'login') {
-			redirect('user/index');
-		}else{
-			$data['data_kunjungan_aktif'] = $this->M_Pasien->get_data_riwayat_kunjungan_aktif()->result_array();
-			$data['data_pasien'] = $this->M_Pasien->get_data_pasien()->row();
-			$this->load->view('home/index', $data);
-		}
+		$this->load->view('home/index');
 	}
 }
