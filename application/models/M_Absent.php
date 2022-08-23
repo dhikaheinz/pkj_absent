@@ -11,4 +11,8 @@ class M_Absent extends CI_Model {
 
         return $query = $this->db->get();
     }
+
+    function insert_absent_masuk($data){
+        $this->db->insert('absent', $data);
+    }
 }

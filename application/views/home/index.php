@@ -63,11 +63,11 @@
 									date_default_timezone_set("Asia/Bangkok");
 									$jam = date("H");
 									$menit = date("i");
-									if ($jam >= 15 && $menit > 00) {
+									//if ($jam >= 15 && $menit > 00) {
 										echo '<a href="'.base_url('home/absentKeluar').'" class="bg-red-400 text-slate-700 p-2 rounded-md hover:bg-slate-400 transition-all">Absen Keluar</a>';
-									}elseif ($jam >= 6 && $menit > 00) {
-										echo '<button type="submit" class="bg-[#a2c082] text-white p-2 rounded-md hover:bg-slate-400 transition-all">Absen Masuk</button>';
-									};
+									//}elseif ($jam >= 6 && $menit > 00) {
+										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
+									//};
 								?>
 						</div>
 					</form>
@@ -201,6 +201,11 @@
 			document.getElementById("getLocBtn").classList.remove("hover:bg-slate-400");
 			document.getElementById("getLocBtn").classList.add("bg-slate-400");
 			document.getElementById("getLocBtn").textContent = 'Lokasi Terkunci';
+
+			$btnMasuk = document.getElementById("btnMasuk");
+			btnMasuk.classList.add("hover:bg-slate-400");
+			btnMasuk.classList.add("bg-[#a2c082]");
+			btnMasuk.disabled = false;
 		}
 
 		</script>
