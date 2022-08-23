@@ -9,8 +9,6 @@ class Admin extends CI_Controller {
 
 		if ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '2') {
 			redirect('user/index');
-		}else{
-			$this->load->view('admin/index');
 		}
 		$this->load->model('M_Admin');
     }
