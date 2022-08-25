@@ -37,11 +37,11 @@ class User extends CI_Controller {
  
 			$this->session->set_userdata($data_session);
 			}
-			$this->session->set_flashdata('success', '<p class="text-center text-white bg-green-600 my-3 p-2 rounded-md">Berhasil Login</p>');
+			$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-green-600 my-3 p-2 rounded-md">Berhasil Login</p>');
 			redirect('home/index');
  
 		}else{
-			$this->session->set_flashdata('success', '<p class="text-center text-white bg-red-500 my-3 p-2 rounded-md">Data NIP Dan Password Salah</p>');
+			$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-red-500 my-3 p-2 rounded-md">Data NIP Dan Password Salah</p>');
 			redirect('user/index');
 		}
 	}

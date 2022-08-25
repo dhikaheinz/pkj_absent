@@ -19,3 +19,75 @@
 			</div>
 		</footer>
 		<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+				<!-- Footer Close -->
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+      	<script>
+			function Menu(e) {
+				let list = document.querySelector("ul");
+				e.name === "menu"
+					? ((e.name = "close"),
+					  list.classList.add("top-[70px]"),
+					  list.classList.add("opacity-100"))
+					: ((e.name = "menu"),
+					  list.classList.remove("top-[70px]"),
+					  list.classList.remove("opacity-100"));
+			}
+			$(function(){
+            setInterval(timestamp, 1000);//fungsi yang dijalan setiap detik, 1000 = 1 detik
+        })
+        
+        //Fungi ajax untuk Menampilkan Jam dengan mengakses File ajax_timestamp.php
+        function timestamp() {
+            $.ajax({
+                url: '<?= base_url('assets/php/ajax_timestamp.php') ?>',
+                    success: function(data) {
+                    $('#timestamp').html(data);
+                },
+            });
+        }
+
+		// Get Location
+		// var x = document.getElementById("demo");
+		var gmap = document.getElementById("gmap_canvas");
+
+		function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.watchPosition(showPosition);
+		} else { 
+			// x.innerHTML = "Geolocation is not supported by this browser.";
+		}
+		}
+			
+		function showPosition(position) {
+			// x.innerHTML="Latitude: " + position.coords.latitude + 
+			// "<br>Longitude: " + position.coords.longitude;
+			gmap.src = "https://maps.google.com/maps?q="+ position.coords.latitude +","+ position.coords.longitude +"&t=&z=15&ie=UTF8&iwloc=&output=embed";
+			document.getElementById("lokasi_user").value = position.coords.latitude+","+position.coords.longitude;
+			document.getElementById("lokasi_user_keluar").value = position.coords.latitude+","+position.coords.longitude;
+		}
+
+		function disabledLoc() {
+			var getLocBtn = document.getElementById("getLocBtn");
+			getLocBtn.disabled = true;
+			getLocBtn.classList.remove("bg-[#64b3f4]");
+			getLocBtn.classList.remove("hover:bg-slate-400");
+			getLocBtn.classList.add("bg-slate-400");
+			getLocBtn.textContent = 'Lokasi Terkunci';
+
+			var btnMasuk = document.getElementById("btnMasuk");
+			btnMasuk.classList.add("hover:bg-slate-400");
+			btnMasuk.classList.remove("bg-slate-400");
+			btnMasuk.classList.add("bg-[#a2c082]");
+			btnMasuk.disabled = false;
+
+			var btnKeluar = document.getElementById("btnKeluar");
+			btnKeluar.classList.add("hover:bg-slate-400");
+			btnKeluar.classList.remove("bg-slate-400");
+			btnKeluar.classList.add("bg-[#a2c082]");
+			btnKeluar.disabled = false;
+		}
+
+		$('.hide-it').delay(3000).fadeOut(1000);
+
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>

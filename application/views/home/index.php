@@ -44,33 +44,90 @@
 							Waktu Saat Ini : <?php date_default_timezone_set("Asia/Bangkok"); echo date("d-m-Y"); ?><div id="timestamp"></div>
 						</div>
 							<?php //foreach ($data_kunjungan_aktif as $row) { ?>
-						<div class="konten-profil flex items-center justify-center md:items-start md:justify-start flex-col mt-5 shadow-md w-80 py-5 transition-all">
+						<div class="konten-profil flex items-center justify-center md:items-start md:justify-start flex-col mt-5 shadow-md py-5 transition-all">
 							<div class="nomor-antrian ml-3">
-								Absen Masuk <span class="p-1 m-2 bg-blue-400 rounded-lg text-white"></span>
+								Absen Masuk :<span class="p-1 m-2 bg-[#64b3f4] rounded-md text-white">
+									<?php 
+									if(!empty($data_absent->attendance_entry)){
+										echo $data_absent->attendance_entry;
+										}else{
+										echo "Belum Absen Masuk";
+										}
+										 ?>
+										 </span>&nbsp; | &nbsp;
+										 <?php 
+									if(!empty($data_absent->location_entry)){
+										echo '<a href="https://google.com/maps/place/'.$data_absent->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-md text-white hover:bg-slate-400">Lihat Lokasi 📌</a>';
+										}else{
+										echo "";
+										}
+										 ?>
 							</div>
 							<div class="tgl-antrian mt-5 ml-3">
-								Absen Pulang <span class="p-1 bg-yellow-300 rounded-lg"></span>
+								Absen Pulang :<span class="p-1 m-2 bg-[#a2c082] rounded-md text-white">
+								<?php 
+									if(!empty($data_absent->attendance_return)){
+										echo $data_absent->attendance_return;
+										}else{
+										echo "Belum Absen Pulang";
+										}
+										 ?>	
+										</span>&nbsp; | &nbsp;
+										 <?php 
+									if(!empty($data_absent->location_return)){
+										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#a2c082] rounded-md text-white hover:bg-slate-400">Lihat Lokasi 📌</a>';
+										}else{
+										echo "";
+										}
+										 ?>
 							</div>
 							<!-- <p id="demo"></p> -->
 						</div>
 						<?php //} ?>
 					</div>
-					<form action="<?php echo site_url('home/absentMasuk'); ?>" method="post">
-						<input id="lokasi_user" name="lokasi_user" type="text" value="">
+							<!-- absen masuk  -->
+						<form action="<?php echo site_url('home/absentMasuk'); ?>" method="post">
+						<input id="lokasi_user" name="lokasi_user" type="text" value="" hidden>
 						<div class="flex items-center justify-center flex-row mt-14 gap-1 transition-all">
 							<button id="getLocBtn" type="button" onclick="getLocation()" class="bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all" data-bs-toggle="modal" data-bs-target="#exampleModal">Konfirmasi Lokasi</button>
 								<?php 
 									date_default_timezone_set("Asia/Bangkok");
 									$jam = date("H");
 									$menit = date("i");
-									//if ($jam >= 15 && $menit > 00) {
-										echo '<a href="'.base_url('home/absentKeluar').'" class="bg-red-400 text-slate-700 p-2 rounded-md hover:bg-slate-400 transition-all">Absen Keluar</a>';
-									//}elseif ($jam >= 6 && $menit > 00) {
+									//if ($jam >= 6 && $menit > 00) {
 										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
 									//};
 								?>
-						</div>
-					</form>
+						</form>
+						<!-- absen masuk  -->
+							
+						<!-- input kegiatan -->
+						<!-- <form action="<?php //echo site_url('home/absentKegiatan'); ?>" method="post"> -->
+						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-[#a2c082] hover:bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan">Input Kegiatan</button>
+						<!-- </form> -->
+						<!-- input kegiatan  -->
+
+						<!-- absen keluar -->
+						<form action="
+						<?php 
+						if(!empty($data_absent->id_absent)){
+							echo site_url('home/absentKeluar/'.$data_absent->id_absent.'');
+							}else{
+							echo "";
+							} 
+						?>" method="post">
+						<input id="lokasi_user_keluar" name="lokasi_user_keluar" type="text" value="" hidden>
+							<?php 
+								date_default_timezone_set("Asia/Bangkok");
+								$jam = date("H");
+								$menit = date("i");
+								//if ($jam >= 15 && $menit > 00) {
+									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
+								//};
+							?>
+						</form>
+						<!-- absen keluar -->
+					</div>
 				</div>
 				<div class="profil-detail flex items-center justify-center flex-col w-96 md:w-[300px] p-3 shadow-lg rounded-lg bg-white">
 					<div class="bg-[#c8dab6] p-2 rounded-md">
@@ -90,29 +147,45 @@
 	<!-- Modal -->
 	<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
 	id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog relative w-auto pointer-events-none">
-		<div
-		class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
-		<div
-			class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-			<h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Lokasi Anda Sekarang</h5>
-			<button type="button"
-			class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-			data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body relative p-4">
-				<div class="mapouter">
-					<div class="gmap_canvas mx-auto">
-						<iframe width="100%" height="400" id="gmap_canvas" src="https://maps.google.com/maps?&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-						</iframe>
+		<div class="modal-dialog relative w-auto pointer-events-none">
+			<div
+			class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+			<div
+				class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+				<h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Lokasi Anda Sekarang</h5>
+				<button type="button"
+				class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+				data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body relative p-4">
+					<div class="mapouter">
+						<div class="gmap_canvas mx-auto">
+							<iframe width="100%" height="400" id="gmap_canvas" src="https://maps.google.com/maps?&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+							</iframe>
+						</div>
 					</div>
-				</div>
-		</div>
-		<div
-			class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-			<button type="button" class="px-6
+			</div>
+			<div
+				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+				<button type="button" class="px-6
+				py-2.5
+				bg-red-600
+				text-white
+				font-medium
+				text-xs
+				leading-tight
+				uppercase
+				rounded
+				shadow-md
+				hover:bg-red-700 hover:shadow-lg
+				focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0
+				active:bg-red-800 active:shadow-lg
+				transition
+				duration-150
+				ease-in-out" data-bs-dismiss="modal">Tutup</button>
+				<button type="button" class="px-6
 			py-2.5
-			bg-red-600
+			bg-sky-600
 			text-white
 			font-medium
 			text-xs
@@ -120,95 +193,130 @@
 			uppercase
 			rounded
 			shadow-md
-			hover:bg-red-700 hover:shadow-lg
-			focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0
-			active:bg-red-800 active:shadow-lg
+			hover:bg-sky-700 hover:shadow-lg
+			focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0
+			active:bg-sky-800 active:shadow-lg
 			transition
 			duration-150
-			ease-in-out" data-bs-dismiss="modal">Tutup</button>
-			<button type="button" class="px-6
-		py-2.5
-		bg-sky-600
-		text-white
-		font-medium
-		text-xs
-		leading-tight
-		uppercase
-		rounded
-		shadow-md
-		hover:bg-sky-700 hover:shadow-lg
-		focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0
-		active:bg-sky-800 active:shadow-lg
-		transition
-		duration-150
-		ease-in-out
-		ml-1" data-bs-dismiss="modal" onclick="disabledLoc()">Simpan Lokasi</button>
-		</div>
+			ease-in-out
+			ml-1" data-bs-dismiss="modal" onclick="disabledLoc()">Simpan Lokasi</button>
+			</div>
+			</div>
 		</div>
 	</div>
+
+	<!-- modal input kegiatan -->
+	<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+	id="inputKegiatan" tabindex="-1" aria-labelledby="inputKegiatan" aria-hidden="true">
+		<div class="modal-dialog relative w-auto pointer-events-none">
+			<div
+			class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+			<div
+				class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+				<h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Kegiatan Anda Hari Ini?</h5>
+				<button type="button"
+				class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+				data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body relative p-4">
+				<!-- input kegiatan -->
+				<form action="<?php echo site_url('home/inputKegiatan'); ?>" method="post" enctype="multipart/form-data">
+				<div class="grid grid-cols-1 gap-4">
+					<div>
+						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Deskripsi Kegiatan : </label>
+						<textarea
+						class="
+							form-control
+							block
+							w-full
+							px-3
+							py-1.5
+							text-base
+							font-normal
+							text-gray-700
+							bg-white bg-clip-padding
+							border border-solid border-gray-300
+							rounded
+							transition
+							ease-in-out
+							m-0
+							focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+						"
+						name="job_desc"
+						rows="3"
+						placeholder="Masukkan Kegiatan Hari ini"
+						></textarea>
+					</div>
+					<div>
+					<label for="formFileSm" class="form-label inline-block mb-2 text-gray-700">Small file input example</label>
+					<input class="form-control
+					block
+					w-full
+					px-2
+					py-1
+					text-sm
+					font-normal
+					text-gray-700
+					bg-white bg-clip-padding
+					border border-solid border-gray-300
+					rounded
+					transition
+					ease-in-out
+					m-0
+					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='files[]' multiple="" multiple>
+					<input type="text" name="id_absent" value="
+					<?php 
+						if(!empty($data_absent->id_absent)){
+							echo $data_absent->id_absent;
+							}else{
+							echo "";
+							} 
+						?>
+					" hidden>
+					</div>
+				</div>
+			</div>
+			<div
+				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+				<button type="button" class="px-6
+				py-2.5
+				bg-red-600
+				text-white
+				font-medium
+				text-xs
+				leading-tight
+				uppercase
+				rounded
+				shadow-md
+				hover:bg-red-700 hover:shadow-lg
+				focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0
+				active:bg-red-800 active:shadow-lg
+				transition
+				duration-150
+				ease-in-out" data-bs-dismiss="modal">Tutup</button>
+				<button type="submit" class="px-6
+			py-2.5
+			bg-sky-600
+			text-white
+			font-medium
+			text-xs
+			leading-tight
+			uppercase
+			rounded
+			shadow-md
+			hover:bg-sky-700 hover:shadow-lg
+			focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0
+			active:bg-sky-800 active:shadow-lg
+			transition
+			duration-150
+			ease-in-out
+			ml-1" data-bs-dismiss="modal">Simpan Data</button>
+			</div>
+			</form>
+			</div>
+		</div>
 	</div>
 
 	<?php $this->load->view('template/footer'); ?>
-		<!-- Footer Close -->
-		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-      	<script>
-			function Menu(e) {
-				let list = document.querySelector("ul");
-				e.name === "menu"
-					? ((e.name = "close"),
-					  list.classList.add("top-[70px]"),
-					  list.classList.add("opacity-100"))
-					: ((e.name = "menu"),
-					  list.classList.remove("top-[70px]"),
-					  list.classList.remove("opacity-100"));
-			}
-			$(function(){
-            setInterval(timestamp, 1000);//fungsi yang dijalan setiap detik, 1000 = 1 detik
-        })
-        
-        //Fungi ajax untuk Menampilkan Jam dengan mengakses File ajax_timestamp.php
-        function timestamp() {
-            $.ajax({
-                url: '<?= base_url('assets/php/ajax_timestamp.php') ?>',
-                    success: function(data) {
-                    $('#timestamp').html(data);
-                },
-            });
-        }
-
-		// Get Location
-		// var x = document.getElementById("demo");
-		var gmap = document.getElementById("gmap_canvas");
-
-		function getLocation() {
-		if (navigator.geolocation) {
-			navigator.geolocation.watchPosition(showPosition);
-		} else { 
-			// x.innerHTML = "Geolocation is not supported by this browser.";
-		}
-		}
-			
-		function showPosition(position) {
-			// x.innerHTML="Latitude: " + position.coords.latitude + 
-			// "<br>Longitude: " + position.coords.longitude;
-			gmap.src = "https://maps.google.com/maps?q="+ position.coords.latitude +","+ position.coords.longitude +"&t=&z=15&ie=UTF8&iwloc=&output=embed";
-			document.getElementById("lokasi_user").value = position.coords.latitude+","+position.coords.longitude;
-		}
-
-		function disabledLoc() {
-			document.getElementById("getLocBtn").disabled = true;
-			document.getElementById("getLocBtn").classList.remove("bg-[#64b3f4]");
-			document.getElementById("getLocBtn").classList.remove("hover:bg-slate-400");
-			document.getElementById("getLocBtn").classList.add("bg-slate-400");
-			document.getElementById("getLocBtn").textContent = 'Lokasi Terkunci';
-
-			$btnMasuk = document.getElementById("btnMasuk");
-			btnMasuk.classList.add("hover:bg-slate-400");
-			btnMasuk.classList.add("bg-[#a2c082]");
-			btnMasuk.disabled = false;
-		}
-
-		</script>
-		<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
 	</body>
 </html>
