@@ -19,6 +19,7 @@ class Home extends CI_Controller {
 	{
 		$data['data_pegawai'] = $this->M_Absent->get_data_pegawai()->row();
 		$data['data_absent'] = $this->M_Absent->get_data_absent()->row();
+		$data['data_today'] = $this->M_Absent->get_data_today()->result();
 		$this->load->view('home/index', $data);
 	}
 
@@ -51,16 +52,55 @@ class Home extends CI_Controller {
 	}
 
 	function inputKegiatan(){
+		$folderPath = "upload/file/".date("Y")."/".date("m")."/";
+        if(!is_dir($folderPath)){
+            mkdir($folderPath, 0777, true);
+        }
+        
+        $image_path = array();
+
+        $count = count($_FILES['files']['name']);
+   
+        for($i=0;$i<$count;$i++){
+   
+          if(!empty($_FILES['files']['name'][$i])){
+   
+            $_FILES['file']['name'] = $_FILES['files']['name'][$i];
+            $_FILES['file']['type'] = $_FILES['files']['type'][$i];
+            $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+            $_FILES['file']['error'] = $_FILES['files']['error'][$i];
+            $_FILES['file']['size'] = $_FILES['files']['size'][$i];
+  
+            $temp = explode(".",$_FILES['files']['name'][$i]);
+            $ext = end($temp);
+            $newname = round(microtime(true)) . '_'. uniqid() . '.' . end($temp);
+
+            $config['upload_path'] = $folderPath;
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['max_size'] = '20000'; // max_size in kb
+            $config['file_name'] = $newname;
+
+            $this->load->library('upload',$config); 
+
+            if($this->upload->do_upload('file')){
+              $uploadData = $this->upload->data();
+              $image_path[] = $folderPath ."$uploadData[file_name]";
+            }
+          }
+        }
+
+        $filepath = implode("#",$image_path);
+
 		$data_absent_kegiatan = array(
 		'id_absent' => $this->input->post("id_absent"),
 		'job_nip' => $this->session->userdata('user_nip'),
 		'job_desc' => $this->input->post('job_desc'),
+		'doc_file' => $filepath,
 		'created_by' => $this->session->userdata('id_user'),
 		'updated_date' => date('Y-m-d')
 		);
 			
 		$this->M_Absent->data_absent_kegiatan($data_absent_kegiatan);
-		$this->M_Absent->data_absent_kegiatan_file();
 		$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-[#64b3f4] my-3 p-2 rounded-md">Kegiatan Hari Ini Telah Disimpan</p>');
 		redirect('home');
 	}

@@ -5,6 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/x-icon" href="<?= base_url('assets/img/logo.png') ?>" />
 		<title>Klinik Ortotik Prostetik | Poltekkes Jakarta I</title>
+		<!-- textarea -->
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 		<!-- css tailwind -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
@@ -13,15 +17,11 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+		<!-- tailwind -->
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script
-				type="module"
-				src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-			></script>
-			<script
-				nomodule
-				src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-			></script>
+		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+		<!-- textarea -->
 
 		<style>
 		body{
@@ -60,11 +60,11 @@
 				Home
 				</li>
 			</a>
-			<a href="<?= base_url('user/kritiksaran') ?>" class="text-xl text-white font-semibold hover:text-black">
+			<!-- <a href="" class="text-xl text-white font-semibold hover:text-black">
 				<li class="px-4 py-3 md:my-0 hover:bg-[#c2e59c] h-full rounded-md">
 				Kritik Dan Saran
 				</li>
-			</a>
+			</a> -->
 
             <?php 
                 if ($this->session->userdata('status') != "login") {

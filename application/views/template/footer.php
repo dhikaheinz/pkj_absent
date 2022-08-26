@@ -18,10 +18,14 @@
 				</div>
 			</div>
 		</footer>
+		<!-- plugnin textarea -->
+		
+		<!-- close -->
 		<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
 				<!-- Footer Close -->
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
       	<script>
+
 			function Menu(e) {
 				let list = document.querySelector("ul");
 				e.name === "menu"
@@ -51,11 +55,11 @@
 		var gmap = document.getElementById("gmap_canvas");
 
 		function getLocation() {
-		if (navigator.geolocation) {
-			navigator.geolocation.watchPosition(showPosition);
-		} else { 
-			// x.innerHTML = "Geolocation is not supported by this browser.";
-		}
+			if (navigator.geolocation) {
+				navigator.geolocation.watchPosition(showPosition);
+			} else { 
+				// x.innerHTML = "Geolocation is not supported by this browser.";
+			}
 		}
 			
 		function showPosition(position) {
@@ -88,6 +92,26 @@
 		}
 
 		$('.hide-it').delay(3000).fadeOut(1000);
+
+		var btnKegiatan = document.getElementById("btnKegiatan");
+		var cekMasuk = "<?php 
+			if(!empty($data_absent->attendance_entry)){
+			echo $data_absent->attendance_entry;
+			}else{
+			echo "";
+			}
+			?>";
+		if (cekMasuk) {
+			btnKegiatan.classList.add("hover:bg-slate-400");
+			btnKegiatan.classList.remove("bg-slate-400");
+			btnKegiatan.classList.add("bg-[#64b3f4]");
+			btnKegiatan.disabled = false;
+			// btnMasuk.classList.add("hover:bg-slate-400");
+			btnMasuk.classList.remove("bg-[#a2c082]");
+			btnMasuk.classList.add("bg-slate-400");
+			btnMasuk.disabled = true;
+			btnMasuk.hidden = true;
+		}
 
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>

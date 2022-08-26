@@ -32,7 +32,7 @@
 					Unggah file kegiatan online hanya diperbolehkan <b>file gambar (jpg, jpeg, png)</b>. <br>
 					</div> -->
 				</div>
-				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[784px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
+				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[1000px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
 							Absen Pegawai
@@ -46,7 +46,7 @@
 							<?php //foreach ($data_kunjungan_aktif as $row) { ?>
 						<div class="konten-profil flex items-center justify-center md:items-start md:justify-start flex-col mt-5 shadow-md py-5 transition-all">
 							<div class="nomor-antrian ml-3">
-								Absen Masuk :<span class="p-1 m-2 bg-[#64b3f4] rounded-md text-white">
+								Absen Masuk :<span class="p-1 m-2 bg-red-500 rounded-md text-white">
 									<?php 
 									if(!empty($data_absent->attendance_entry)){
 										echo $data_absent->attendance_entry;
@@ -57,14 +57,14 @@
 										 </span>&nbsp; | &nbsp;
 										 <?php 
 									if(!empty($data_absent->location_entry)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-md text-white hover:bg-slate-400">Lihat Lokasi 📌</a>';
+										echo '<a href="https://google.com/maps/place/'.$data_absent->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">📌</a>';
 										}else{
 										echo "";
 										}
 										 ?>
 							</div>
 							<div class="tgl-antrian mt-5 ml-3">
-								Absen Pulang :<span class="p-1 m-2 bg-[#a2c082] rounded-md text-white">
+								Absen Pulang :<span class="p-1 m-2 bg-red-500 rounded-md text-white">
 								<?php 
 									if(!empty($data_absent->attendance_return)){
 										echo $data_absent->attendance_return;
@@ -75,7 +75,7 @@
 										</span>&nbsp; | &nbsp;
 										 <?php 
 									if(!empty($data_absent->location_return)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#a2c082] rounded-md text-white hover:bg-slate-400">Lihat Lokasi 📌</a>';
+										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#a2c082] rounded-md text-white hover:bg-slate-400">📌</a>';
 										}else{
 										echo "";
 										}
@@ -88,22 +88,22 @@
 							<!-- absen masuk  -->
 						<form action="<?php echo site_url('home/absentMasuk'); ?>" method="post">
 						<input id="lokasi_user" name="lokasi_user" type="text" value="" hidden>
-						<div class="flex items-center justify-center flex-row mt-14 gap-1 transition-all">
+						<div class="flex items-center justify-center flex-row mt-5 gap-1 transition-all">
 							<button id="getLocBtn" type="button" onclick="getLocation()" class="bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all" data-bs-toggle="modal" data-bs-target="#exampleModal">Konfirmasi Lokasi</button>
 								<?php 
 									date_default_timezone_set("Asia/Bangkok");
 									$jam = date("H");
 									$menit = date("i");
-									//if ($jam >= 6 && $menit > 00) {
+									if ($jam >= 6 && $jam <= 15) {
 										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
-									//};
+									};
 								?>
 						</form>
 						<!-- absen masuk  -->
 							
 						<!-- input kegiatan -->
 						<!-- <form action="<?php //echo site_url('home/absentKegiatan'); ?>" method="post"> -->
-						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-[#a2c082] hover:bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan">Input Kegiatan</button>
+						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan" disabled>Input Kegiatan</button>
 						<!-- </form> -->
 						<!-- input kegiatan  -->
 
@@ -121,12 +121,57 @@
 								date_default_timezone_set("Asia/Bangkok");
 								$jam = date("H");
 								$menit = date("i");
-								//if ($jam >= 15 && $menit > 00) {
+								if ($jam >= 15 && $jam <= 6) {
 									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
-								//};
+								};
 							?>
 						</form>
 						<!-- absen keluar -->
+					</div>
+					<div class="konten-profil mt-2 shadow-md py-5 transition-all w-full">
+					<div class="flex flex-col">
+						<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+							<div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+							<div class="overflow-x-auto">
+								<table class="min-w-full">
+								<thead class="border-b">
+									<tr>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Tanggal
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Deskripsi Kegiatan
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Foto Kegiatan
+									</th>
+									</tr>
+								</thead>
+								<tbody>
+								<?php foreach ($data_today as $row) { ?>
+									<tr class="border-b">
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->updated_date ?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->job_desc ?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?php
+										$data = explode("#",$row->doc_file);
+										foreach($data as $row){
+											echo '<a href="'.site_url($row).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><br>';
+										}
+										?> 
+									</td>
+									</tr>
+									<?php } ?>
+								</tbody>
+								</table>
+							</div>
+							</div>
+						</div>
+						</div>
 					</div>
 				</div>
 				<div class="profil-detail flex items-center justify-center flex-col w-96 md:w-[300px] p-3 shadow-lg rounded-lg bg-white">
@@ -224,7 +269,8 @@
 				<div class="grid grid-cols-1 gap-4">
 					<div>
 						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Deskripsi Kegiatan : </label>
-						<textarea
+						<textarea id="summernote" name="job_desc"></textarea>
+						<!-- <textarea
 						class="
 							form-control
 							block
@@ -245,10 +291,10 @@
 						name="job_desc"
 						rows="3"
 						placeholder="Masukkan Kegiatan Hari ini"
-						></textarea>
+						></textarea> -->
 					</div>
 					<div>
-					<label for="formFileSm" class="form-label inline-block mb-2 text-gray-700">Small file input example</label>
+					<label for="formFileSm" class="form-label inline-block mb-2 text-gray-700">Foto Kegiatan :</label>
 					<input class="form-control
 					block
 					w-full
@@ -270,7 +316,7 @@
 							echo $data_absent->id_absent;
 							}else{
 							echo "";
-							} 
+							}
 						?>
 					" hidden>
 					</div>
@@ -316,7 +362,17 @@
 			</div>
 		</div>
 	</div>
-
+	<script>
+      $('#summernote').summernote({
+		disableDragAndDrop: true,
+        placeholder: 'Masukkan Kegiatan Harian',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+          ['font', ['bold', 'underline', 'clear']],
+        ]
+      });
+    </script>
 	<?php $this->load->view('template/footer'); ?>
 	</body>
 </html>

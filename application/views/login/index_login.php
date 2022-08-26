@@ -22,7 +22,7 @@
 											class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 shadow-sm">
 							</div>
 							<div class="mt-4">
-								<label class="block text-slate-600">Tanggal Lahir<label>
+								<label class="block text-slate-600">Password<label>
 										<input name="pass" type="password" placeholder="Password Anda"
 											class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 shadow-sm">
 							</div>
