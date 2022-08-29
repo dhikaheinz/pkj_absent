@@ -40,94 +40,7 @@
 						<?php
 							echo $this->session->flashdata('success'); 
 						?>
-						<div class="mt-5 text-lg text-white p-3 bg-[#64b3f4] rounded-md">
-							Tanggal Saat Ini : <?php date_default_timezone_set("Asia/Bangkok"); echo date("d-m-Y"); ?><br>
-							Waktu Saat Ini : <text id="timestamp"></text>
-						</div>
-							<?php //foreach ($data_kunjungan_aktif as $row) { ?>
-						<div class="konten-profil flex items-start justify-center md:items-start md:justify-start flex-col md:flex-row mt-5 shadow-md py-5 transition-all">
-							<div class="nomor-antrian ml-3">
-								Absen Masuk &nbsp;:<span class="p-1 m-2 bg-red-500 rounded-md text-white">
-									<?php 
-									if(!empty($data_absent->attendance_entry)){
-										echo $data_absent->attendance_entry;
-										}else{
-										echo "Belum Absen Masuk";
-										}
-										 ?>
-										 </span>&nbsp;|&nbsp;
-										 <?php 
-									if(!empty($data_absent->location_entry)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Loc 📌</a>';
-										}else{
-										echo "";
-										}
-										 ?>
-							</div>
-							<div class="tgl-antrian mt-5 md:mt-0 ml-3">
-								Absen Pulang :<span class="p-1 m-2 bg-red-500 rounded-md text-white">
-								<?php 
-									if(!empty($data_absent->attendance_return)){
-										echo $data_absent->attendance_return;
-										}else{
-										echo "Belum Absen Pulang";
-										}
-										 ?>	
-										</span>&nbsp;|&nbsp;
-										 <?php 
-									if(!empty($data_absent->location_return)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#a2c082] rounded-md text-white hover:bg-slate-400">📌</a>';
-										}else{
-										echo "";
-										}
-										 ?>
-							</div>
-							<!-- <p id="demo"></p> -->
-						</div>
-						<?php //} ?>
-					</div>
-							<!-- absen masuk  -->
-						<form action="<?php echo site_url('home/absentMasuk'); ?>" method="post">
-						<input id="lokasi_user" name="lokasi_user" type="text" value="" hidden>
-					<div class="flex items-center justify-center flex-row mt-5 gap-1 transition-all">
-							<button id="getLocBtn" type="button" onclick="getLocation()" class="bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all" data-bs-toggle="modal" data-bs-target="#exampleModal">Konfirmasi Lokasi</button>
-								<?php 
-									date_default_timezone_set("Asia/Bangkok");
-									$jam = date("H");
-									$menit = date("i");
-									if ($jam >= 6 && $jam <= 15) {
-										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
-									};
-								?>
-						</form>
-						<!-- absen masuk  -->
-							
-						<!-- input kegiatan -->
-						<!-- <form action="<?php //echo site_url('home/absentKegiatan'); ?>" method="post"> -->
-						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan" disabled>Input Kegiatan</button>
-						<!-- </form> -->
-						<!-- input kegiatan  -->
-
-						<!-- absen keluar -->
-						<form action="
-						<?php 
-						if(!empty($data_absent->id_absent)){
-							echo site_url('home/absentKeluar/'.$data_absent->id_absent.'');
-							}else{
-							echo "";
-							} 
-						?>" method="post">
-						<input id="lokasi_user_keluar" name="lokasi_user_keluar" type="text" value="" hidden>
-							<?php 
-								date_default_timezone_set("Asia/Bangkok");
-								$jam = date("H");
-								$menit = date("i");
-								if ($jam >= 15 || $jam <= 6) {
-									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
-								};
-							?>
-						</form>
-						<!-- absen keluar -->
+						
 					</div>
 					<div class="konten-profil mt-2 shadow-md py-5 transition-all w-full">
 					<div class="flex flex-col">
@@ -141,6 +54,18 @@
 									Tanggal
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Absen Masuk
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Absen Keluar
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Loc Keluar
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Loc Keluar
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Deskripsi Kegiatan
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
@@ -149,10 +74,22 @@
 									</tr>
 								</thead>
 								<tbody>
-								<?php foreach ($data_today as $row) { ?>
+								<?php foreach ($data_all as $row) { ?>
 									<tr class="border-b">
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->updated_date ?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->attendance_entry ?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->attendance_return ?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->location_entry ?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->location_return ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->job_desc ?>
@@ -173,19 +110,6 @@
 							</div>
 						</div>
 						</div>
-					</div>
-					<!-- lihat semua kegiatan  -->
-					<a href="<?= site_url('home/lihatKegiatan') ?>" class="mt-3 bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all">Lihat Kegiatan</a>
-					<!-- lihat semua kegiatan  -->
-				</div>
-				<div class="profil-detail flex items-center justify-center flex-col w-96 md:w-[300px] p-3 shadow-lg rounded-lg bg-white">
-					<div class="bg-[#c8dab6] p-2 rounded-md">
-					<b>Keterangan :</b> <br>
-					Absen masuk dapat dilakukan setelah jam <b>06:00</b>. <br>
-					Absen pulang hanya dapat dilakukan pada jam berikut : <br><br>
-					1. Senin s.d. Kamis pada pukul <b>15.00</b>, dan <br>
-					2. Jumat pada pukul <b>15.30</b> <br>
-					Unggah file kegiatan online hanya diperbolehkan <b>file gambar (jpg, jpeg, png)</b>. <br>
 					</div>
 				</div>
 			</div>

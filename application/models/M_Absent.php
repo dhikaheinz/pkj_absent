@@ -40,11 +40,23 @@ class M_Absent extends CI_Model {
         $this->db->insert('daily_job', $data);
     }
     
+    function data_absent_delete($id){
+        $this->db->delete('daily_job', array('id_absent' => $id)); 
+    }
+
     function get_data_today(){
         $this->db->select('*');
         $this->db->from('absent');
         $this->db->join('daily_job', 'absent.id_absent = daily_job.id_absent');
         $this->db->where('absent.updated_date', date('Y-m-d'));
+        $this->db->where('absent.absent_nip', $this->session->userdata('user_nip'));
+        return $query = $this->db->get();
+    }
+
+    function get_data_all(){
+        $this->db->select('*');
+        $this->db->from('absent');
+        $this->db->join('daily_job', 'absent.id_absent = daily_job.id_absent');
         $this->db->where('absent.absent_nip', $this->session->userdata('user_nip'));
         return $query = $this->db->get();
     }

@@ -23,6 +23,14 @@ class Home extends CI_Controller {
 		$this->load->view('home/index', $data);
 	}
 
+	public function lihatKegiatan()
+	{
+		$data['data_pegawai'] = $this->M_Absent->get_data_pegawai()->row();
+		$data['data_absent'] = $this->M_Absent->get_data_absent()->row();
+		$data['data_all'] = $this->M_Absent->get_data_all()->result();
+		$this->load->view('home/lihat_kegiatan', $data);
+	}
+
 	function absentMasuk(){
 		$data_absent_masuk = array(
 		'absent_nip' => $this->session->userdata('user_nip'),
@@ -52,6 +60,7 @@ class Home extends CI_Controller {
 	}
 
 	function inputKegiatan(){
+		$this->M_Absent->data_absent_delete($this->input->post("id_absent"));
 		$folderPath = "upload/file/".date("Y")."/".date("m")."/";
         if(!is_dir($folderPath)){
             mkdir($folderPath, 0777, true);
