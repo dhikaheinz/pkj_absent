@@ -32,7 +32,7 @@
 					Unggah file kegiatan online hanya diperbolehkan <b>file gambar (jpg, jpeg, png)</b>. <br>
 					</div> -->
 				</div>
-				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[1000px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
+				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[1100px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
 							Absen Pegawai
@@ -60,13 +60,16 @@
 									Absen Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Keluar
+									Loc Masuk
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Loc Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Deskripsi Kegiatan
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									SUrat Keterangan
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Foto Kegiatan
@@ -86,19 +89,49 @@
 									<?= $row->attendance_return ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->location_entry ?>
+										<?php
+										if (!empty($row->location_entry)) {
+											echo '<a href="https://google.com/maps/place/'.$row->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Lokasi 📌</a>';
+										} else {
+											echo '';
+										}
+										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->location_return ?>
+									<?php
+										if (!empty($row->location_return)) {
+											echo '<a href="https://google.com/maps/place/'.$row->location_return.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Lokasi 📌</a>';
+										} else {
+											echo '';
+										}
+										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->job_desc ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?php
+									// foreach ($data_all_foto as $row2){
+										$dataket = explode("#", $row->doc_file_ket);
+										foreach($dataket as $rowket){
+											if (!empty($rowket)) {
+												echo '<a href="'.site_url($rowket).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><br>';
+											} else {
+												echo 'Kosong';
+											}
+										};
+									// }
+										?>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?php
 										$data = explode("#",$row->doc_file);
 										foreach($data as $row){
-											echo '<a href="'.site_url($row).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><br>';
+											if (!empty($row)) {
+												echo '<a href="'.site_url($row).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><br>';
+											} else {
+												echo 'Kosong';
+											}
+											
 										}
 										?> 
 									</td>

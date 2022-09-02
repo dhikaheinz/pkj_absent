@@ -60,4 +60,18 @@ class M_Absent extends CI_Model {
         $this->db->where('absent.absent_nip', $this->session->userdata('user_nip'));
         return $query = $this->db->get();
     }
+
+    function get_data_all_without(){
+        $this->db->select('*');
+        $this->db->from('absent');
+        $this->db->join('daily_job', 'absent.id_absent = daily_job.id_absent');
+        return $query = $this->db->get();
+    }
+
+    function get_data_all_akun(){
+        $this->db->select('*');
+        $this->db->from('profile');
+        // $this->db->join('daily_job', 'absent.id_absent = daily_job.id_absent');
+        return $query = $this->db->get();
+    }
 }

@@ -4,7 +4,7 @@
 		<div class="flex items-center justify-center h-screen -mt-14 transition-all">
 			<!-- flex content -->
 			<div class="dashboard flex items-center justify-center rounded-lg flex-col md:flex-row gap-3 transition-all my-24 md:my-0">
-				<div class="profil-detail flex items-center justify-center flex-col w-96 md:w-96 px-6 pb-6 shadow-lg rounded-lg bg-white">
+				<div class="profil-detail flex items-center justify-center flex-col w-72 md:w-72 px-6 pb-6 shadow-lg rounded-lg bg-white">
 					<!-- <div class="nama-profil mt-2 self-end">
 						  <a href="" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all"><ion-icon name="create-outline" class="text-2xl"></ion-icon></a>
 					</div> -->
@@ -29,23 +29,10 @@
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
 							Administrator Absen Pegawai
 						</div>
-						<?php
-							echo $this->session->flashdata('success'); 
-						?>
-						<?php //foreach ($data_kunjungan_aktif as $row) { ?>
-						<div class="konten-profil flex items-center justify-center md:items-start md:justify-start flex-col mt-5 shadow-md w-80 py-5 transition-all">
-							<div class="nomor-antrian ml-3">
-								Data 1 <span class="p-1 m-2 bg-blue-400 rounded-lg text-white">00</span>
-							</div>
-							<div class="tgl-antrian mt-5 ml-3">
-								Data 2 <span class="p-1 bg-yellow-300 rounded-lg"></span>
-							</div>
-						</div>
-						<?php //} ?>
 					</div>
-					<div class="flex items-center justify-center flex-row mt-14 gap-1 transition-all">
-						<a href="<?= base_url('Kunjungan/daftar') ?>" class="bg-green-500 text-white p-2 rounded-md hover:bg-slate-400 transition-all">Absen Masuk</a>
-						<a href="<?= base_url('Kunjungan/riwayat') ?>" class="bg-red-400 text-slate-700 p-2 rounded-md hover:bg-slate-400 transition-all">Absen Keluar</a>
+					<div class="flex items-center justify-center flex-row mt-2 gap-1 transition-all">
+						<a href="<?= base_url('admin/dataAbsen') ?>" class="bg-[#a2c082] text-white p-5 rounded-lg hover:bg-slate-400 transition-all">Data Absensi Pegawai</a>
+						<a href="<?= base_url('admin/akunPegawai') ?>" class="bg-[#a2c082] text-white p-5 rounded-lg hover:bg-slate-400 transition-all">Data Akun Pegawai</a>
 					</div>
 				</div>
 			</div>

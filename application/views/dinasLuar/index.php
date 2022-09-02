@@ -12,10 +12,24 @@
 						<img src="https://icon-library.com/images/person-image-icon/person-image-icon-2.jpg" alt="" class="rounded-full w-28 h-28">
 					</div>
 	  				<div class="nama-profil mt-2">
-						  <p class="font-bold"><?= $data_pegawai->profile_name ?></p>
+						  <p class="font-bold">
+                            <?php 
+                            if(!empty($data_pegawai->profile_name)){
+                                echo $data_pegawai->profile_name;
+                                }else{
+                                echo "";
+                                }
+                            ?>
+                            </p>
 					</div>
 	  				<div class="nomor-profil">
-						  NIP. <?= $data_pegawai->profile_nip ?>
+                            <?php 
+                            if(!empty($data_pegawai->profile_nip)){
+                                echo "NIP. ".$data_pegawai->profile_nip;
+                                }else{
+                                echo "";
+                                }
+                            ?>
 					</div>
 					<div class="social-media">
 						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-twitter"></ion-icon></span></a>
@@ -35,7 +49,7 @@
 				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 md:w-[384px] lg:w-[500px] xl:w-[800px] : p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
-							Absen Pegawai
+							Absen Pegawai Halaman Dinas Luar
 						</div>
 						<?php
 							echo $this->session->flashdata('success'); 
@@ -149,9 +163,6 @@
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Foto Kegiatan
 									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Opsi
-									</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -164,11 +175,11 @@
 									<?= $row['job_desc'] ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-										<?php
+									<?php
 										$data = explode("#", $row['doc_file_ket']);
-										foreach($data as $row){
-											if (!empty($row)) {
-												echo '<a href="'.site_url($row).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat File</a><br>';
+											foreach($data as $row){
+												if (!empty($row)) {
+													echo '<a href="'.site_url($row).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat File</a><br>';
 												} else {
 													echo 'Kosong';
 												}
@@ -177,7 +188,7 @@
 										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-										<?php
+									<?php
 									foreach ($data_today_foto as $row2){
 										$datafoto = explode("#", $row2['doc_file']);
 										foreach($datafoto as $rowfoto){
@@ -188,10 +199,7 @@
 											}
 										};
 									}
-									?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<a href="<?= base_url("updatedata") ?>" title="" target="" class="text-white p-1 bg-red-600 rounded-md transition-all">Edit</a><br>
+										?>
 									</td>
 									</tr>
 									<?php } ?>
@@ -292,7 +300,8 @@
 	</div>
 
 	<!-- modal input kegiatan -->
-	<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="inputKegiatan" tabindex="-1" aria-labelledby="inputKegiatan" aria-hidden="true">
+	<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+	id="inputKegiatan" tabindex="-1" aria-labelledby="inputKegiatan" aria-hidden="true">
 		<div class="modal-dialog relative w-auto pointer-events-none">
 			<div
 			class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
@@ -380,6 +389,28 @@
 					m-0
 					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='filesdoc[]' multiple="" multiple>
 					<label for="formFileSm" class="form-label inline-block mb-2 text-xs text-red-600 italic">*Kosongkan bila tidak ada surat keterangan</label>
+					<div class="flex justify-start">
+					<div>
+						<div class="form-check">
+						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="1" type="radio" name="status_absent" id="flexRadioDefault1" checked>
+						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault1">
+							Dinas Luar (Lampirkan Surat)
+						</label>
+						</div>
+						<div class="form-check">
+						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="2" type="radio" name="status_absent" id="flexRadioDefault2">
+						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault2">
+							Sakit (Lampirkan Surat)
+						</label>
+						</div>
+						<div class="form-check">
+						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="3" type="radio" name="status_absent" id="flexRadioDefault3">
+						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault3">
+							Izin
+						</label>
+						</div>
+					</div>
+					</div>
 				</div>
 				</div>
 			</div>

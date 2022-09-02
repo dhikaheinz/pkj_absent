@@ -6,10 +6,8 @@ class Home extends CI_Controller {
 	function __construct()
     {
         parent::__construct();
-		if ($this->session->userdata('status') != 'login') {
+		if ($this->session->userdata('status') == '') {
 			redirect('user/index');
-		}else if ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '1') {
-			redirect('admin/index');
 		}
 		$this->load->model('M_User');
 		$this->load->model('M_Absent');
@@ -17,10 +15,43 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$data['data_pegawai'] = $this->M_Absent->get_data_pegawai()->row();
-		$data['data_absent'] = $this->M_Absent->get_data_absent()->row();
-		$data['data_today'] = $this->M_Absent->get_data_today()->result();
-		$this->load->view('home/index', $data);
+		$ipaddress = '116.254.124.44';
+		// if (getenv('HTTP_CLIENT_IP')){
+		// 	$ipaddress = getenv('HTTP_CLIENT_IP');
+		// }
+		// else if(getenv('HTTP_X_FORWARDED_FOR')){
+		// 	$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+		// }
+		// else if(getenv('HTTP_X_FORWARDED')){
+		// 	$ipaddress = getenv('HTTP_X_FORWARDED');
+		// }
+		// else if(getenv('HTTP_FORWARDED_FOR')){
+		// 	$ipaddress = getenv('HTTP_FORWARDED_FOR');
+		// }
+		// else if(getenv('HTTP_FORWARDED')){
+		// 	$ipaddress = getenv('HTTP_FORWARDED');
+		// }
+		// else if(getenv('REMOTE_ADDR')){
+		// 	$ipaddress = getenv('REMOTE_ADDR');
+		// }
+		// else{
+		// 	$ipaddress = 'IP tidak dikenali';
+		// }
+		$ipExplode = explode(".",$ipaddress);
+		if ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '2') {
+			if ($ipExplode[0] == 116 && $ipExplode[1] == 254 && $ipExplode[2] == 124 || $ipExplode[2] == 125) {
+				$data['data_pegawai'] = $this->M_Absent->get_data_pegawai()->row();
+				$data['data_absent'] = $this->M_Absent->get_data_absent()->row();
+				$data['data_today'] = $this->M_Absent->get_data_today()->result_array();
+				$data['data_today_foto'] = $this->M_Absent->get_data_today()->result_array();
+				// print_r($data['data_today']);
+				$this->load->view('home/index', $data);
+			} else {
+				redirect('dinasluar');
+			}
+		}elseif ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '1') {
+			redirect('admin');
+		}
 	}
 
 	public function lihatKegiatan()
@@ -28,6 +59,7 @@ class Home extends CI_Controller {
 		$data['data_pegawai'] = $this->M_Absent->get_data_pegawai()->row();
 		$data['data_absent'] = $this->M_Absent->get_data_absent()->row();
 		$data['data_all'] = $this->M_Absent->get_data_all()->result();
+		$data['data_all_foto'] = $this->M_Absent->get_data_all()->result_array();
 		$this->load->view('home/lihat_kegiatan', $data);
 	}
 
@@ -61,14 +93,20 @@ class Home extends CI_Controller {
 
 	function inputKegiatan(){
 		$this->M_Absent->data_absent_delete($this->input->post("id_absent"));
-		$folderPath = "upload/file/".date("Y")."/".date("m")."/";
+		$folderPath = "upload/foto/".date("Y")."/".date("m")."/";
+		$folderPathDoc = "upload/surat/".date("Y")."/".date("m")."/";
         if(!is_dir($folderPath)){
             mkdir($folderPath, 0777, true);
         }
+        if(!is_dir($folderPathDoc)){
+            mkdir($folderPathDoc, 0777, true);
+        }
         
         $image_path = array();
+        $doc_path = array();
 
         $count = count($_FILES['files']['name']);
+        $countdoc = count($_FILES['filesdoc']['name']);
    
         for($i=0;$i<$count;$i++){
    
@@ -85,11 +123,12 @@ class Home extends CI_Controller {
             $newname = round(microtime(true)) . '_'. uniqid() . '.' . end($temp);
 
             $config['upload_path'] = $folderPath;
-            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['allowed_types'] = 'jpg|jpeg|png|pdf';
             $config['max_size'] = '20000'; // max_size in kb
             $config['file_name'] = $newname;
 
-            $this->load->library('upload',$config); 
+            $this->load->library('upload',$config);
+			$this->upload->initialize($config);
 
             if($this->upload->do_upload('file')){
               $uploadData = $this->upload->data();
@@ -98,13 +137,45 @@ class Home extends CI_Controller {
           }
         }
 
+        for($i=0;$i<$countdoc;$i++){
+   
+          if(!empty($_FILES['filesdoc']['name'][$i])){
+   
+            $_FILES['file']['name'] = $_FILES['filesdoc']['name'][$i];
+            $_FILES['file']['type'] = $_FILES['filesdoc']['type'][$i];
+            $_FILES['file']['tmp_name'] = $_FILES['filesdoc']['tmp_name'][$i];
+            $_FILES['file']['error'] = $_FILES['filesdoc']['error'][$i];
+            $_FILES['file']['size'] = $_FILES['filesdoc']['size'][$i];
+  
+            $temp = explode(".",$_FILES['filesdoc']['name'][$i]);
+            $ext = end($temp);
+            $newname = round(microtime(true)) . '_'. uniqid() . '.' . end($temp);
+
+            $config['upload_path'] = $folderPathDoc;
+            $config['allowed_types'] = 'jpg|jpeg|png|pdf';
+            $config['max_size'] = '20000'; // max_size in kb
+            $config['file_name'] = $newname;
+
+            $this->load->library('upload',$config);
+			$this->upload->initialize($config);
+
+            if($this->upload->do_upload('file')){
+              $uploadData = $this->upload->data();
+              $doc_path[] = $folderPathDoc ."$uploadData[file_name]";
+            }
+          }
+        }
+
         $filepath = implode("#",$image_path);
+        $filepathDoc = implode("#",$doc_path);
 
 		$data_absent_kegiatan = array(
 		'id_absent' => $this->input->post("id_absent"),
 		'job_nip' => $this->session->userdata('user_nip'),
 		'job_desc' => $this->input->post('job_desc'),
 		'doc_file' => $filepath,
+		'doc_file_ket' => $filepathDoc,
+		'status_absent' => $this->input->post('status_absent'),
 		'created_by' => $this->session->userdata('id_user'),
 		'updated_date' => date('Y-m-d')
 		);

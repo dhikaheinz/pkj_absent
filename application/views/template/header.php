@@ -4,7 +4,9 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/x-icon" href="<?= base_url('assets/img/logo.png') ?>" />
-		<title>Klinik Ortotik Prostetik | Poltekkes Jakarta I</title>
+		<title>Absensi Pegawai Poltekkes | Poltekkes Jakarta I</title>
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 		<!-- textarea -->
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -67,6 +69,11 @@
 			</a> -->
 
             <?php 
+				$nip_login = '';
+				if (!empty($data_pegawai->profile_nip)) {
+					$nip_login = $data_pegawai->profile_nip;
+				}
+
                 if ($this->session->userdata('status') != "login") {
                     echo '<a href="'.base_url().'" class="text-xl text-white font-semibold hover:text-black">
                     <li class="px-4 py-3 md:my-0 hover:bg-[#c2e59c] h-full rounded-md">
@@ -76,7 +83,7 @@
                 }else {
                     echo '<a href="'.base_url('user/logout').'" class="text-xl text-white font-semibold hover:text-black">
                     <li class="px-4 py-3 md:my-0 hover:bg-[#c2e59c] h-full rounded-md">
-                    Logout
+                    Logout ('.$nip_login.')
                     </li>
                     </a>';
                 }

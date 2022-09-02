@@ -113,5 +113,10 @@
 			btnMasuk.hidden = true;
 		}
 
+		function closeSide(){
+			var modal = document.getElementById("closeModal");
+			modal.classList.add("hidden");
+		}
+
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
