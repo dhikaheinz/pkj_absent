@@ -26,6 +26,23 @@
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
       	<script>
 
+		var btnKegiatanFile = document.getElementById("btnKegiatanFile");
+		var cekDescKeg = "<?php 
+			if(!empty($data_today_row->id_job)){
+			echo $data_today_row->id_job;
+			}else{
+			echo "";
+			}
+			?>";
+		if (cekDescKeg) {
+			btnKegiatanFile.classList.add("hover:bg-slate-400");
+			btnKegiatanFile.classList.remove("bg-slate-400");
+			btnKegiatanFile.classList.remove("cursor-not-allowed");
+			btnKegiatanFile.classList.add("bg-[#64b3f4]");
+			btnKegiatanFile.disabled = false;
+			// btnMasuk.classList.add("hover:bg-slate-400");
+		}
+
 			function Menu(e) {
 				let list = document.querySelector("ul");
 				e.name === "menu"
@@ -76,17 +93,20 @@
 			getLocBtn.classList.remove("bg-[#64b3f4]");
 			getLocBtn.classList.remove("hover:bg-slate-400");
 			getLocBtn.classList.add("bg-slate-400");
+			getLocBtn.classList.add("cursor-not-allowed");
 			getLocBtn.textContent = 'Lokasi Terkunci';
 
 			var btnMasuk = document.getElementById("btnMasuk");
 			btnMasuk.classList.add("hover:bg-slate-400");
 			btnMasuk.classList.remove("bg-slate-400");
+			btnMasuk.classList.remove("cursor-not-allowed");
 			btnMasuk.classList.add("bg-[#a2c082]");
 			btnMasuk.disabled = false;
 
 			var btnKeluar = document.getElementById("btnKeluar");
 			btnKeluar.classList.add("hover:bg-slate-400");
 			btnKeluar.classList.remove("bg-slate-400");
+			btnKeluar.classList.remove("cursor-not-allowed");
 			btnKeluar.classList.add("bg-[#a2c082]");
 			btnKeluar.disabled = false;
 		}
@@ -104,11 +124,13 @@
 		if (cekMasuk) {
 			btnKegiatan.classList.add("hover:bg-slate-400");
 			btnKegiatan.classList.remove("bg-slate-400");
+			btnKegiatan.classList.remove("cursor-not-allowed");
 			btnKegiatan.classList.add("bg-[#64b3f4]");
 			btnKegiatan.disabled = false;
 			// btnMasuk.classList.add("hover:bg-slate-400");
 			btnMasuk.classList.remove("bg-[#a2c082]");
 			btnMasuk.classList.add("bg-slate-400");
+			btnMasuk.classList.add("cursor-not-allowed");
 			btnMasuk.disabled = true;
 			btnMasuk.hidden = true;
 		}

@@ -105,6 +105,7 @@
 						<!-- input kegiatan -->
 						<!-- <form action="<?php //echo site_url('home/absentKegiatan'); ?>" method="post"> -->
 						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan" disabled>Input Kegiatan</button>
+						<button type="button" id="btnKegiatanFile" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Buat Data Kegiatan Harian Terlebih Hahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatanFile" disabled>Upload File Kegiatan</button>
 						<!-- </form> -->
 						<!-- input kegiatan  -->
 
@@ -165,10 +166,9 @@
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 										<?php
-										$data = explode("#", $row['doc_file_ket']);
-										foreach($data as $row){
-											if (!empty($row)) {
-												echo '<a href="'.site_url($row).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat File</a><br>';
+										foreach($get_data_doc as $doc){
+											if (!empty($doc)) {
+												echo '<a href="'.site_url($doc['doc_file_ket']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat File</a><br>';
 												} else {
 													echo 'Kosong';
 												}
@@ -178,20 +178,18 @@
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 										<?php
-									foreach ($data_today_foto as $row2){
-										$datafoto = explode("#", $row2['doc_file']);
-										foreach($datafoto as $rowfoto){
-											if (!empty($rowfoto)) {
-												echo '<a href="'.site_url($rowfoto).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><br>';
-											} else {
-												echo 'Kosong';
-											}
-										};
-									}
-									?>
+										foreach($get_data_foto as $foto){
+											if (!empty($foto)) {
+												echo '<a href="'.site_url($foto['foto_file']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat File</a><br>';
+												} else {
+													echo 'Kosong';
+												}
+												
+											};
+										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<a href="<?= base_url("updatedata") ?>" title="" target="" class="text-white p-1 bg-red-600 rounded-md transition-all">Edit</a><br>
+									<button  title="" data-bs-toggle="modal" data-bs-target="#editKegiatan" class="text-white p-1 bg-red-600 rounded-md transition-all">Edit</a><br>
 									</td>
 									</tr>
 									<?php } ?>
@@ -334,6 +332,79 @@
 						></textarea> -->
 					</div>
 					<div>
+					<input type="text" name="id_absent" value="
+					<?php 
+						if(!empty($data_absent->id_absent)){
+							echo $data_absent->id_absent;
+							}else{
+							echo "";
+							}
+						?>
+					" hidden>
+
+					</div>
+					<div>
+				</div>
+				</div>
+			</div>
+			<div
+				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+				<button type="button" class="px-6
+				py-2.5
+				bg-red-600
+				text-white
+				font-medium
+				text-xs
+				leading-tight
+				uppercase
+				rounded
+				shadow-md
+				hover:bg-red-700 hover:shadow-lg
+				focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0
+				active:bg-red-800 active:shadow-lg
+				transition
+				duration-150
+				ease-in-out" data-bs-dismiss="modal">Tutup</button>
+				<button type="submit" class="px-6
+			py-2.5
+			bg-sky-600
+			text-white
+			font-medium
+			text-xs
+			leading-tight
+			uppercase
+			rounded
+			shadow-md
+			hover:bg-sky-700 hover:shadow-lg
+			focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0
+			active:bg-sky-800 active:shadow-lg
+			transition
+			duration-150
+			ease-in-out
+			ml-1" data-bs-dismiss="modal">Simpan Data</button>
+			</div>
+			</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- modal input kegiatan -->
+	<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="inputKegiatanFile" tabindex="-1" aria-labelledby="inputKegiatanFile" aria-hidden="true">
+		<div class="modal-dialog relative w-auto pointer-events-none">
+			<div
+			class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+			<div
+				class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+				<h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Input File Dokumen?</h5>
+				<button type="button"
+				class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+				data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body relative p-4">
+				<!-- input kegiatan -->
+				<form action="<?php echo site_url('home/inputKegiatanFile'); ?>" method="post" enctype="multipart/form-data">
+				<div class="grid grid-cols-1 gap-4">
+					<div>
 					<label for="formFileSm" class="form-label inline-block mb-2 text-gray-700">File Kegiatan (foto):</label>
 					<input class="form-control
 					block
@@ -349,12 +420,12 @@
 					transition
 					ease-in-out
 					m-0
-					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='files[]' multiple="" multiple>
+					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='files[]' accept="image/*">
 					<label for="formFileSm" class="form-label inline-block mb-2 text-xs text-red-600 italic">*Isi dengan foto kegiatan hari ini</label>
-					<input type="text" name="id_absent" value="
+					<input type="text" name="id_job" value="
 					<?php 
-						if(!empty($data_absent->id_absent)){
-							echo $data_absent->id_absent;
+						if(!empty($data_today_row->id_job)){
+							echo $data_today_row->id_job;
 							}else{
 							echo "";
 							}
@@ -378,7 +449,7 @@
 					transition
 					ease-in-out
 					m-0
-					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='filesdoc[]' multiple="" multiple>
+					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='filesdoc[]' accept=".pdf">
 					<label for="formFileSm" class="form-label inline-block mb-2 text-xs text-red-600 italic">*Kosongkan bila tidak ada surat keterangan</label>
 				</div>
 				</div>
@@ -423,16 +494,133 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- modal input kegiatan -->
+	<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="editKegiatan" tabindex="-1" aria-labelledby="editKegiatan" aria-hidden="true">
+		<div class="modal-dialog relative w-auto pointer-events-none">
+			<div
+			class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+			<div
+				class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+				<h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Edit Kegiatan Hari ini</h5>
+				<button type="button"
+				class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+				data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body relative p-4">
+				<!-- input kegiatan -->
+				<form action="<?php echo site_url('home/editKegiatan/'.$data_today_row->id_job.''); ?>" method="post" enctype="multipart/form-data">
+				<div class="grid grid-cols-1 gap-4">
+					<div>
+						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Deskripsi Kegiatan : </label>
+						<textarea id="summernote-edit" name="job_desc"></textarea>
+						<!-- <textarea
+						class="
+							form-control
+							block
+							w-full
+							px-3
+							py-1.5
+							text-base
+							font-normal
+							text-gray-700
+							bg-white bg-clip-padding
+							border border-solid border-gray-300
+							rounded
+							transition
+							ease-in-out
+							m-0
+							focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+						"
+						name="job_desc"
+						rows="3"
+						placeholder="Masukkan Kegiatan Hari ini"
+						></textarea> -->
+					</div>
+					<div>
+					<input type="text" name="id_absent" value="
+					<?php 
+						if(!empty($data_absent->id_absent)){
+							echo $data_absent->id_absent;
+							}else{
+							echo "";
+							}
+						?>
+					" hidden>
+
+					</div>
+					<div>
+				</div>
+				</div>
+			</div>
+			<div
+				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+				<button type="button" class="px-6
+				py-2.5
+				bg-red-600
+				text-white
+				font-medium
+				text-xs
+				leading-tight
+				uppercase
+				rounded
+				shadow-md
+				hover:bg-red-700 hover:shadow-lg
+				focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0
+				active:bg-red-800 active:shadow-lg
+				transition
+				duration-150
+				ease-in-out" data-bs-dismiss="modal">Tutup</button>
+				<button type="submit" class="px-6
+			py-2.5
+			bg-sky-600
+			text-white
+			font-medium
+			text-xs
+			leading-tight
+			uppercase
+			rounded
+			shadow-md
+			hover:bg-sky-700 hover:shadow-lg
+			focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0
+			active:bg-sky-800 active:shadow-lg
+			transition
+			duration-150
+			ease-in-out
+			ml-1" data-bs-dismiss="modal">Edit Data</button>
+			</div>
+			</form>
+			</div>
+		</div>
+	</div>
 	<script>
-      $('#summernote').summernote({
+		$('#summernote').summernote({
 		disableDragAndDrop: true,
-        placeholder: 'Masukkan Kegiatan Harian',
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-          ['font', ['bold', 'underline', 'clear']],
-        ]
-      });
+		placeholder: 'Masukkan Kegiatan Harian',
+		tabsize: 2,
+		height: 120,
+		toolbar: [
+			['font', ['bold', 'underline', 'clear']],
+		]
+		});
+		$('#summernote-edit').summernote({
+		disableDragAndDrop: true,
+		placeholder: 'Masukkan Kegiatan Harian',
+		tabsize: 2,
+		height: 120,
+		toolbar: [
+			['font', ['bold', 'underline', 'clear']],
+		]
+		});
+
+		var HTMLstring = '<?php 
+		if(!empty($data_today_row->job_desc)){
+			echo $data_today_row->job_desc;
+			}else{
+			echo "";
+			}
+		?>';
+		$('#summernote-edit').summernote('pasteHTML', HTMLstring);
     </script>
 	<?php $this->load->view('template/footer'); ?>
 	</body>

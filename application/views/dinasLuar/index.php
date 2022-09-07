@@ -110,7 +110,7 @@
 									$jam = date("H");
 									$menit = date("i");
 									if ($jam >= 6 && $jam <= 15) {
-										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
+										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
 									};
 								?>
 						</form>
@@ -118,7 +118,7 @@
 							
 						<!-- input kegiatan -->
 						<!-- <form action="<?php //echo site_url('home/absentKegiatan'); ?>" method="post"> -->
-						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan" disabled>Input Kegiatan</button>
+						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan" disabled>Input Kegiatan</button>
 						<!-- </form> -->
 						<!-- input kegiatan  -->
 
@@ -137,7 +137,7 @@
 								$jam = date("H");
 								$menit = date("i");
 								if ($jam >= 15 || $jam <= 6) {
-									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
+									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
 								};
 							?>
 						</form>
