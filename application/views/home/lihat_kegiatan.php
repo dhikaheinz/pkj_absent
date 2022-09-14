@@ -4,35 +4,8 @@
 		<div class="flex items-center justify-center md:h-screen -mt-14 transition-all">
 			<!-- flex content -->
 			<div class="dashboard flex items-center justify-center rounded-lg flex-col md:flex-row gap-3 transition-all mt-48 mb-20 md:my-0">
-				<div class="profil-detail flex items-center justify-center flex-col w-96 md:w-80 px-6 pb-6 shadow-lg rounded-lg bg-white">
-					<!-- <div class="nama-profil mt-2 self-end">
-						  <a href="" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all"><ion-icon name="create-outline" class="text-2xl"></ion-icon></a>
-					</div> -->
-					<div class="foto-profil h-30 w-30 rounded-full bg-slate-100 mt-5">
-						<img src="https://icon-library.com/images/person-image-icon/person-image-icon-2.jpg" alt="" class="rounded-full w-28 h-28">
-					</div>
-	  				<div class="nama-profil mt-2">
-						  <p class="font-bold"><?= $data_pegawai->profile_name ?></p>
-					</div>
-	  				<div class="nomor-profil">
-						  NIP. <?= $data_pegawai->profile_nip ?>
-					</div>
-					<div class="social-media">
-						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-twitter"></ion-icon></span></a>
-						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-facebook"></ion-icon></span></a>
-						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-instagram"></ion-icon></span></a>
-						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-linkedin"></ion-icon></span></a>
-					</div>
-					<!-- <div class="bg-[#c8dab6] p-2 rounded-md mt-2">
-					<b>Keterangan :</b> <br>
-					Absen masuk dapat dilakukan setelah jam <b>06:00</b>. <br>
-					Absen pulang hanya dapat dilakukan pada jam berikut : <br>
-					1. Senin s.d. Kamis pada pukul <b>15.00</b>, dan <br>
-					2. Jumat pada pukul <b>15.30</b> <br>
-					Unggah file kegiatan online hanya diperbolehkan <b>file gambar (jpg, jpeg, png)</b>. <br>
-					</div> -->
-				</div>
-				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[1100px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
+				
+				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[1200px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
 							Absen Pegawai
@@ -43,15 +16,21 @@
 						
 					</div>
 					<div class="konten-profil mt-2 shadow-md py-5 transition-all w-full">
-					<div class="flex flex-col">
+						<div class="mb-3">
+							<a href="<?= base_url() ?>" class="p-2 rounded-md bg-[#64b3f4] mb-3 hover:bg-slate-500 text-white">Kembali</a>
+						</div>
+						<div class="flex flex-col">
 						<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
 							<div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
 							<div class="overflow-x-auto">
-								<table class="min-w-full">
+								<table class="min-w-full display nowrap row-border" id="dataTable" style="width:100%">
 								<thead class="border-b">
 									<tr>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Tanggal
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									NIP
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Absen Masuk
@@ -60,7 +39,7 @@
 									Absen Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Masuk
+									Loc Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Loc Keluar
@@ -69,10 +48,7 @@
 									Deskripsi Kegiatan
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									SUrat Keterangan
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Foto Kegiatan
+									Status
 									</th>
 									</tr>
 								</thead>
@@ -81,6 +57,9 @@
 									<tr class="border-b">
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->updated_date ?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->job_nip ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->attendance_entry ?>
@@ -110,30 +89,17 @@
 									<?= $row->job_desc ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?php
-									// foreach ($data_all_foto as $row2){
-										$dataket = explode("#", $row->doc_file_ket);
-										foreach($dataket as $rowket){
-											if (!empty($rowket)) {
-												echo '<a href="'.site_url($rowket).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><br>';
-											} else {
-												echo 'Kosong';
+										<?php 
+											if ($row->status_absent == "1") {
+												echo 'Masuk';
+											} else if ($row->status_absent == "2") {
+												echo 'Dinas Luar';
+											} else if ($row->status_absent == "3") {
+												echo 'Izin';
+											}else if ($row->status_absent == "4") {
+												echo 'Sakit';
 											}
-										};
-									// }
 										?>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?php
-										$data = explode("#",$row->doc_file);
-										foreach($data as $row){
-											if (!empty($row)) {
-												echo '<a href="'.site_url($row).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><br>';
-											} else {
-												echo 'Kosong';
-											}
-											
-										}
-										?> 
 									</td>
 									</tr>
 									<?php } ?>
@@ -141,7 +107,6 @@
 								</table>
 							</div>
 							</div>
-						</div>
 						</div>
 					</div>
 				</div>
@@ -333,7 +298,22 @@
           ['font', ['bold', 'underline', 'clear']],
         ]
       });
+	  $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    dom: 'Bfrtip',
+                    scrollX: 200,
+                });
+            });
     </script>
 	<?php $this->load->view('template/footer'); ?>
+		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
 	</body>
 </html>

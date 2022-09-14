@@ -103,12 +103,16 @@
 			btnMasuk.classList.add("bg-[#a2c082]");
 			btnMasuk.disabled = false;
 
-			var btnKeluar = document.getElementById("btnKeluar");
-			btnKeluar.classList.add("hover:bg-slate-400");
-			btnKeluar.classList.remove("bg-slate-400");
-			btnKeluar.classList.remove("cursor-not-allowed");
-			btnKeluar.classList.add("bg-[#a2c082]");
-			btnKeluar.disabled = false;
+			if (cekDescKeg) {
+				var btnKeluar = document.getElementById("btnKeluar");
+				btnKeluar.classList.add("hover:bg-slate-400");
+				btnKeluar.classList.remove("bg-slate-400");
+				btnKeluar.classList.remove("cursor-not-allowed");
+				btnKeluar.classList.add("bg-[#a2c082]");
+				btnKeluar.disabled = false;	
+			} else {
+				
+			}
 		}
 
 		$('.hide-it').delay(3000).fadeOut(1000);
@@ -137,6 +141,11 @@
 
 		function closeSide(){
 			var modal = document.getElementById("closeModal");
+			modal.classList.add("hidden");
+		}
+
+		function closeSidePulang(){
+			var modal = document.getElementById("notifKeluar");
 			modal.classList.add("hidden");
 		}
 

@@ -41,12 +41,6 @@
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Status
 									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Surat Keterangan
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Foto Kegiatan
-									</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -86,33 +80,15 @@
 									<?= $row->job_desc ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->status_absent ?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?php
-									// foreach ($data_all_foto as $row2){
-										$dataket = explode("#", $row->doc_file_ket);
-										foreach($dataket as $rowket){
-											if (!empty($rowket)) {
-												echo '<a href="'.site_url($rowket).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat File</a><br>';
-											} else {
-												echo '<div class="p-1 bg-red-500 rounded-lg text-white text-center">Tidak Ada</div>';
+									<?php 
+											if ($row->status_absent == "1") {
+												echo 'Masuk';
+											} else if ($row->status_absent == "2") {
+												echo 'Izin';
+											} else if ($row->status_absent == "2") {
+												echo 'Dinas Luar';
 											}
-										};
-									// }
 										?>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?php
-										$data = explode("#",$row->doc_file);
-										foreach($data as $row){
-											if (!empty($row)) {
-												echo '<a href="'.site_url($row).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><br>';
-											} else {
-												echo '<div class="p-1 bg-red-500 rounded-lg text-white text-center">Tidak Ada</div>';
-											}
-											
-										}
-										?> 
 									</td>
 									</tr>
 									<?php } ?>
@@ -121,7 +97,7 @@
 							</div>
 							</div>
 						</div>
-						</div>
+					</div>
 					<div class="flex items-center justify-center flex-row mt-2 gap-1 transition-all">
 						<a href="<?= base_url('admin/dataAbsen') ?>" class="bg-[#a2c082] text-white p-5 rounded-lg hover:bg-slate-400 transition-all">Data Absensi Pegawai</a>
 						<a href="<?= base_url('admin/akunPegawai') ?>" class="bg-[#a2c082] text-white p-5 rounded-lg hover:bg-slate-400 transition-all">Data Akun Pegawai</a>

@@ -15,7 +15,7 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$ipaddress = '116.254.124.44';
+		$ipaddress = '116.254.128.44';
 		// if (getenv('HTTP_CLIENT_IP')){
 		// 	$ipaddress = getenv('HTTP_CLIENT_IP');
 		// }
@@ -63,6 +63,9 @@ class Home extends CI_Controller {
 		$data['data_absent'] = $this->M_Absent->get_data_absent()->row();
 		$data['data_all'] = $this->M_Absent->get_data_all()->result();
 		$data['data_all_foto'] = $this->M_Absent->get_data_all()->result_array();
+		$data['get_data_doc'] = $this->M_Absent->get_data_doc()->result_array();
+		$data['get_data_foto'] = $this->M_Absent->get_data_foto()->result_array();
+		// print_r($data['data_all']);
 		$this->load->view('home/lihat_kegiatan', $data);
 	}
 
@@ -172,13 +175,21 @@ class Home extends CI_Controller {
         $filepath = implode("#",$image_path);
         $filepathDoc = implode("#",$doc_path);
 
+		$status_absen = "";
+
+		if (!empty($this->input->post('status_absent'))) {
+			$status_absen = $this->input->post('status_absent');
+		}else {
+			$status_absen = "1";
+		}
+
 		$data_absent_kegiatan = array(
 		'id_absent' => $this->input->post("id_absent"),
 		'job_nip' => $this->session->userdata('user_nip'),
 		'job_desc' => $this->input->post('job_desc'),
 		'doc_file' => $filepath,
 		'doc_file_ket' => $filepathDoc,
-		'status_absent' => $this->input->post('status_absent'),
+		'status_absent' => $status_absen,
 		'created_by' => $this->session->userdata('id_user'),
 		'updated_date' => date('Y-m-d')
 		);
@@ -267,27 +278,69 @@ class Home extends CI_Controller {
 			  }
 		}
 
-        $filepath = implode("#",$image_path);
         $filepathDoc = implode("#",$doc_path);
+        $filepathFoto = implode("#",$image_path);
 
-		$data_absent_kegiatan_file = array(
-		'id_job' => $this->input->post("id_job"),
-		'doc_nip' => $this->session->userdata('user_nip'),
-		'doc_file_ket' => $filepathDoc,
-		'created_by' => $this->session->userdata('id_user'),
-		'updated_date' => date('Y-m-d')
-		);
+		$arrayDoc = array();
+		$arrayFoto = array();
 
-		$data_absent_kegiatan_foto = array(
-		'id_job' => $this->input->post("id_job"),
-		'foto_nip' => $this->session->userdata('user_nip'),
-		'foto_file' => $filepath,
-		'created_by' => $this->session->userdata('id_user'),
-		'updated_date' => date('Y-m-d')
-		);
-			
-		$this->M_Absent->data_absent_kegiatan_file($data_absent_kegiatan_file);
-		$this->M_Absent->data_absent_kegiatan_foto($data_absent_kegiatan_foto);
+		//doc
+		if (!empty($filepathDoc)) {
+			$index = 0;
+			foreach ($doc_path as $row) {
+				array_push($arrayDoc, array(           
+						'id_job' => $this->input->post("id_job"),
+						'doc_nip' => $this->session->userdata('user_nip'),
+						'doc_file_ket' => $doc_path[$index],
+						'created_by' => $this->session->userdata('id_user'),
+						'updated_date' => date('Y-m-d')
+					));
+				$index++;
+			}
+			$this->db->insert_batch('document',$arrayDoc);
+		}
+
+		//foto
+		if (!empty($filepathFoto)) {
+			$index = 0;
+			foreach ($image_path as $row) {
+				array_push($arrayFoto, array(           
+						'id_job' => $this->input->post("id_job"),
+						'foto_nip' => $this->session->userdata('user_nip'),
+						'foto_file' => $image_path[$index],
+						'created_by' => $this->session->userdata('id_user'),
+						'updated_date' => date('Y-m-d')
+					));
+				$index++;
+			}
+			$this->db->insert_batch('foto_kegiatan',$arrayFoto);
+		}
+
+		// //doc
+		// if (!empty($filepathDoc)) {
+		// 	$data_absent_kegiatan_file = array(
+		// 	'id_job' => $this->input->post("id_job"),
+		// 	'doc_nip' => $this->session->userdata('user_nip'),
+		// 	'doc_file_ket' => $filepathDoc,
+		// 	'created_by' => $this->session->userdata('id_user'),
+		// 	'updated_date' => date('Y-m-d')
+		// 	);
+		// 	$this->M_Absent->data_absent_kegiatan_file($data_absent_kegiatan_file);
+		// }
+
+		//foto
+		// if (!empty($filepathFoto)) {
+		// 	$data_absent_kegiatan_foto = array(
+		// 	'id_job' => $this->input->post("id_job"),
+		// 	'foto_nip' => $this->session->userdata('user_nip'),
+		// 	'foto_file' => $filepathFoto,
+		// 	'created_by' => $this->session->userdata('id_user'),
+		// 	'updated_date' => date('Y-m-d')
+		// 	);
+		// 	$this->M_Absent->data_absent_kegiatan_foto($data_absent_kegiatan_foto);
+		// }
+		
+	
 		$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-[#64b3f4] my-3 p-2 rounded-md">Kegiatan Hari Ini Telah Disimpan</p>');
 		redirect('home');
 	}
@@ -298,6 +351,40 @@ class Home extends CI_Controller {
 		);
 		
 		$this->M_Absent->editKegiatan($id, $editKegiatan);
+		$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-[#64b3f4] my-3 p-2 rounded-md">Perubahan Telah Disimpan</p>');
+		redirect('home');
+	}
+
+	function deleteDoc($id){
+		$this->db->delete('document', array('id_doc' => $id));
+		redirect('home');
+	}
+
+	function deleteFoto($id){
+		$this->db->delete('foto_kegiatan', array('id_foto' => $id));
+		redirect('home');
+	}
+
+	function detail_profil(){
+		$data['data_pegawai'] = $this->M_Absent->get_data_pegawai()->row();
+		$data['data_absent'] = $this->M_Absent->get_data_absent()->row();
+		$data['data_today'] = $this->M_Absent->get_data_today()->result_array();
+		$data['data_today_row'] = $this->M_Absent->get_data_today()->row();
+		$data['data_today_foto'] = $this->M_Absent->get_data_today()->result_array();
+		$data['get_data_doc'] = $this->M_Absent->get_data_doc()->result_array();
+		$data['get_data_foto'] = $this->M_Absent->get_data_foto()->result_array();
+		$data['get_data_profil'] = $this->M_Absent->detail_profil()->row();
+		$this->load->view('home/detail_profil', $data);
+	}
+
+	function update_profil($id){
+		$editProfil = array(
+			'user_nip' => $this->input->post("user_nip"),
+			'pass' => $this->input->post("pass"),
+			'email' => $this->input->post("email")
+		);
+		
+		$this->M_Absent->editProfil($id, $editProfil);
 		$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-[#64b3f4] my-3 p-2 rounded-md">Perubahan Telah Disimpan</p>');
 		redirect('home');
 	}

@@ -8,6 +8,9 @@
 					<!-- <div class="nama-profil mt-2 self-end">
 						  <a href="" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all"><ion-icon name="create-outline" class="text-2xl"></ion-icon></a>
 					</div> -->
+					<div class="nama-profil mt-2 self-end">
+						  <a href="<?= base_url('home/detail_profil') ?>" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all">Edit Profil <ion-icon name="create-outline" class="text-lg"></ion-icon></a>
+					</div>
 					<div class="foto-profil h-30 w-30 rounded-full bg-slate-100 mt-5">
 						<img src="https://icon-library.com/images/person-image-icon/person-image-icon-2.jpg" alt="" class="rounded-full w-28 h-28">
 					</div>
@@ -40,11 +43,26 @@
 						<?php
 							echo $this->session->flashdata('success'); 
 						?>
-						<div class="mt-5 text-lg text-white p-3 bg-[#64b3f4] rounded-md">
+						<div class="mt-5 text-lg text-white p-3 bg-[#64b3f4] rounded-md w-full">
 							Tanggal Saat Ini : <?php date_default_timezone_set("Asia/Bangkok"); echo date("d-m-Y"); ?><br>
 							Waktu Saat Ini : <text id="timestamp"></text>
 						</div>
-							<?php //foreach ($data_kunjungan_aktif as $row) { ?>
+						<div id="notifKeluar" class="flex justify-between">
+							<?php 
+								date_default_timezone_set("Asia/Bangkok");
+								$jam = date("H");
+								$menit = date("i");
+								if ($jam >= 15 || $jam <= 6) {
+									echo '<div class="mt-2 text-lg text-white p-3 bg-red-500 w-full rounded-md">Tidak Bisa Absen Pulang Jika Belum Melakukan Input Kegiatan Harian</div>
+									<div>
+									<button type="button" onclick="closeSidePulang()" class="-ml-7 mt-3 overflow-auto text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
+									<svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+									<span class="sr-only">Close modal</span>
+									</button>
+									</div>';
+								};
+							?>
+						</div>
 						<div class="konten-profil flex items-start justify-center md:items-start md:justify-start flex-col md:flex-row mt-5 shadow-md py-5 transition-all">
 							<div class="nomor-antrian ml-3">
 								Absen Masuk &nbsp;:<span class="p-1 m-2 bg-red-500 rounded-md text-white">
@@ -96,7 +114,7 @@
 									$jam = date("H");
 									$menit = date("i");
 									if ($jam >= 6 && $jam <= 15) {
-										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
+										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
 									};
 								?>
 						</form>
@@ -104,7 +122,7 @@
 							
 						<!-- input kegiatan -->
 						<!-- <form action="<?php //echo site_url('home/absentKegiatan'); ?>" method="post"> -->
-						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan" disabled>Input Kegiatan</button>
+						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan" disabled>Input Kegiatan</button>
 						<button type="button" id="btnKegiatanFile" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Buat Data Kegiatan Harian Terlebih Hahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatanFile" disabled>Upload File Kegiatan</button>
 						<!-- </form> -->
 						<!-- input kegiatan  -->
@@ -124,7 +142,7 @@
 								$jam = date("H");
 								$menit = date("i");
 								if ($jam >= 15 || $jam <= 6) {
-									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
+									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
 								};
 							?>
 						</form>
@@ -168,11 +186,10 @@
 										<?php
 										foreach($get_data_doc as $doc){
 											if (!empty($doc)) {
-												echo '<a href="'.site_url($doc['doc_file_ket']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat File</a><br>';
+												echo '<div class="mb-3"><a href="'.site_url($doc['doc_file_ket']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all h-10">Lihat File</a><a href="'.site_url('home/deleteDoc/'.$doc['id_doc'].'').'" class=" ml-3 p-1 bg-red-500 w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
 												} else {
 													echo 'Kosong';
 												}
-												
 											};
 										?>
 									</td>
@@ -180,11 +197,10 @@
 										<?php
 										foreach($get_data_foto as $foto){
 											if (!empty($foto)) {
-												echo '<a href="'.site_url($foto['foto_file']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat File</a><br>';
+												echo '<div class="mb-3"><a href="'.site_url($foto['foto_file']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><a href="'.site_url('home/deleteFoto/'.$foto['id_foto'].'').'" class=" ml-3 p-1 bg-red-500 w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
 												} else {
 													echo 'Kosong';
 												}
-												
 											};
 										?>
 									</td>
@@ -420,7 +436,7 @@
 					transition
 					ease-in-out
 					m-0
-					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='files[]' accept="image/*">
+					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='files[]' accept="image/*" multiple>
 					<label for="formFileSm" class="form-label inline-block mb-2 text-xs text-red-600 italic">*Isi dengan foto kegiatan hari ini</label>
 					<input type="text" name="id_job" value="
 					<?php 
@@ -449,7 +465,7 @@
 					transition
 					ease-in-out
 					m-0
-					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='filesdoc[]' accept=".pdf">
+					focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="doc_name" type="file" name='filesdoc[]' accept=".pdf" multiple>
 					<label for="formFileSm" class="form-label inline-block mb-2 text-xs text-red-600 italic">*Kosongkan bila tidak ada surat keterangan</label>
 				</div>
 				</div>

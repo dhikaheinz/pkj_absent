@@ -112,4 +112,17 @@ class M_Absent extends CI_Model {
         $this->db->where('id_job', $id);
         $this->db->update('daily_job', $data);
     }
+
+    
+	function detail_profil(){
+		$this->db->select();
+		$this->db->from('users');
+		$this->db->where('user_nip', $this->session->userdata('user_nip'));
+        return $query = $this->db->get();
+	}
+
+	function editProfil($id, $data){
+		$this->db->where('id_user', $id);
+        $this->db->update('users', $data);
+	}
 }

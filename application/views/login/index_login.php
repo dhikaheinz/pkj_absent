@@ -29,9 +29,6 @@
 							<div>
 								<button type="submit" class="w-full py-1 mt-4 text-white bg-blue-600 rounded-md hover:bg-blue-900 shadow-md">Login</button>
 							</div>
-							<div class="mt-2">
-								<p class="text-slate-600">Login Sebagai Admin? <a href="<?= base_url('user/login_admin') ?>" class="text-sm text-blue-600 hover:underline">Login</a></p>
-							</div>
 						</div>
 					</form>
 				</div>
