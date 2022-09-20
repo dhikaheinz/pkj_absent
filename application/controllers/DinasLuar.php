@@ -14,7 +14,7 @@ class DinasLuar extends CI_Controller {
     }
 
     function index(){
-		$ipaddress = '116.254.128.44';
+		$ipaddress = '116.254.124.44';
 		$ipExplode = explode(".",$ipaddress);
 		if ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '2') {
 			if ($ipExplode[0] == 116 && $ipExplode[1] == 254 && $ipExplode[2] == 124 || $ipExplode[2] == 125) {

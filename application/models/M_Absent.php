@@ -125,4 +125,18 @@ class M_Absent extends CI_Model {
 		$this->db->where('id_user', $id);
         $this->db->update('users', $data);
 	}
+
+    function get_data_doc_byid($id){
+        $this->db->select('*');
+        $this->db->from('document');
+        $this->db->where('id_job', $id);
+        return $query = $this->db->get();
+    }
+
+    function get_data_foto_byid($id){
+        $this->db->select('*');
+        $this->db->from('foto_kegiatan');
+        $this->db->where('id_job', $id);
+        return $query = $this->db->get();
+    }
 }

@@ -15,7 +15,7 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$ipaddress = '116.254.128.44';
+		$ipaddress = '116.254.124.44';
 		// if (getenv('HTTP_CLIENT_IP')){
 		// 	$ipaddress = getenv('HTTP_CLIENT_IP');
 		// }
@@ -67,6 +67,21 @@ class Home extends CI_Controller {
 		$data['get_data_foto'] = $this->M_Absent->get_data_foto()->result_array();
 		// print_r($data['data_all']);
 		$this->load->view('home/lihat_kegiatan', $data);
+	}
+
+	public function lihatFile($id)
+	{
+		$data['data_pegawai'] = $this->M_Absent->get_data_pegawai()->row();
+		$data['data_absent'] = $this->M_Absent->get_data_absent()->row();
+		$data['data_all'] = $this->M_Absent->get_data_all()->result();
+		$data['data_all_foto'] = $this->M_Absent->get_data_all()->result_array();
+		$data['get_data_doc'] = $this->M_Absent->get_data_doc()->result_array();
+		$data['get_data_foto'] = $this->M_Absent->get_data_foto()->result_array();
+
+		$data['data_doc'] = $this->M_Absent->get_data_doc_byid($id)->result_array();
+		$data['data_foto'] = $this->M_Absent->get_data_foto_byid($id)->result_array();
+		// print_r($data['data_all']);
+		$this->load->view('home/lihat_file', $data);
 	}
 
 	function absentMasuk(){
@@ -175,21 +190,19 @@ class Home extends CI_Controller {
         $filepath = implode("#",$image_path);
         $filepathDoc = implode("#",$doc_path);
 
-		$status_absen = "";
+		$status_absent = "";
 
 		if (!empty($this->input->post('status_absent'))) {
-			$status_absen = $this->input->post('status_absent');
+			$status_absent = $this->input->post('status_absent');
 		}else {
-			$status_absen = "1";
+			$status_absent = "1";
 		}
 
 		$data_absent_kegiatan = array(
 		'id_absent' => $this->input->post("id_absent"),
 		'job_nip' => $this->session->userdata('user_nip'),
 		'job_desc' => $this->input->post('job_desc'),
-		'doc_file' => $filepath,
-		'doc_file_ket' => $filepathDoc,
-		'status_absent' => $status_absen,
+		'status_absent' => $status_absent,
 		'created_by' => $this->session->userdata('id_user'),
 		'updated_date' => date('Y-m-d')
 		);

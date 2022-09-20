@@ -9,7 +9,7 @@
 						  <a href="" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all"><ion-icon name="create-outline" class="text-2xl"></ion-icon></a>
 					</div> -->
 					<div class="nama-profil mt-2 self-end">
-						  <a href="<?= base_url('home/detail') ?>" class="text-white px-1 pb-1 pt-1 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all">Edit Profil <ion-icon name="create-outline" class="text-lg"></ion-icon></a>
+						  <!-- <a href="" class="text-white px-1 pb-1 pt-1 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all">Edit Profil <ion-icon name="create-outline" class="text-lg"></ion-icon></a> -->
 					</div>
 					<div class="foto-profil h-30 w-30 rounded-full bg-slate-100 mt-5">
 						<img src="https://icon-library.com/images/person-image-icon/person-image-icon-2.jpg" alt="" class="rounded-full w-28 h-28">

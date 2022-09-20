@@ -94,7 +94,7 @@
 										</span>&nbsp;|&nbsp;
 										 <?php 
 									if(!empty($data_absent->location_return)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#a2c082] rounded-md text-white hover:bg-slate-400">📌</a>';
+										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-md text-white hover:bg-slate-400">&nbsp;Loc 📌</a>';
 										}else{
 										echo "";
 										}
@@ -362,19 +362,19 @@
 					<div class="flex justify-start">
 					<div>
 						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="2" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="2" type="radio" name="status_absent" id="flexRadioDefault1" checked>
 						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault1">
 							Dinas Luar (Lampirkan Surat)
 						</label>
 						</div>
 						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="3" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="3" type="radio" name="status_absent" id="flexRadioDefault2">
 						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault2">
 							Izin (Lampirkan Surat)
 						</label>
 						</div>
 						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="4" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="4" type="radio" name="status_absent" id="flexRadioDefault3">
 						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault3">
 							Sakit (Lampirkan Surat)
 						</label>

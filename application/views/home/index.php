@@ -9,7 +9,7 @@
 						  <a href="" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all"><ion-icon name="create-outline" class="text-2xl"></ion-icon></a>
 					</div> -->
 					<div class="nama-profil mt-2 self-end">
-						  <a href="<?= base_url('home/detail_profil') ?>" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all">Edit Profil <ion-icon name="create-outline" class="text-lg"></ion-icon></a>
+						  <a href="<?= base_url('home/detail_profil') ?>" class="text-white px-1 pb-1 pt-1 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all">Edit Profil <ion-icon name="create-outline" class="text-lg"></ion-icon></a>
 					</div>
 					<div class="foto-profil h-30 w-30 rounded-full bg-slate-100 mt-5">
 						<img src="https://icon-library.com/images/person-image-icon/person-image-icon-2.jpg" alt="" class="rounded-full w-28 h-28">
@@ -107,15 +107,15 @@
 							<!-- absen masuk  -->
 						<form action="<?php echo site_url('home/absentMasuk'); ?>" method="post">
 						<input id="lokasi_user" name="lokasi_user" type="text" value="" hidden>
-					<div class="flex items-center justify-center flex-row mt-5 gap-1 transition-all">
+						<div class="flex items-center justify-center flex-row mt-5 gap-1 transition-all">
 							<button id="getLocBtn" type="button" onclick="getLocation()" class="bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all" data-bs-toggle="modal" data-bs-target="#exampleModal">Konfirmasi Lokasi</button>
 								<?php 
 									date_default_timezone_set("Asia/Bangkok");
-									$jam = date("H");
-									$menit = date("i");
-									if ($jam >= 6 && $jam <= 15) {
+									// $jam = date("H");
+									// $menit = date("i");
+									// if ($jam >= 6 && $jam <= 15) {
 										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
-									};
+									// };
 								?>
 						</form>
 						<!-- absen masuk  -->
@@ -139,11 +139,11 @@
 						<input id="lokasi_user_keluar" name="lokasi_user_keluar" type="text" value="" hidden>
 							<?php 
 								date_default_timezone_set("Asia/Bangkok");
-								$jam = date("H");
-								$menit = date("i");
-								if ($jam >= 15 || $jam <= 6) {
+								// $jam = date("H");
+								// $menit = date("i");
+								// if ($jam >= 15 || $jam <= 6) {
 									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
-								};
+								// };
 							?>
 						</form>
 						<!-- absen keluar -->

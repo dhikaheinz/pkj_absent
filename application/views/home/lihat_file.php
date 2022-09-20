@@ -17,103 +17,62 @@
 					</div>
 					<div class="konten-profil mt-2 shadow-md py-5 transition-all w-full">
 						<div class="mb-3">
-							<a href="<?= base_url() ?>" class="p-2 rounded-md bg-[#64b3f4] mb-3 hover:bg-slate-500 text-white">Kembali</a>
+							<a href="
+                            <?php 
+                                if ($this->session->userdata('status') === 'login') {
+                                    echo site_url('');
+                                }else if ($this->session->userdata('status') === 'admin') {
+                                    echo site_url('');
+                                }
+                            ?>
+                            " class="p-2 rounded-md bg-[#64b3f4] mb-3 hover:bg-slate-500 text-white">Kembali</a>
 						</div>
 						<div class="flex flex-col">
-						<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
 							<div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
 							<div class="overflow-x-auto">
-								<table class="min-w-full display nowrap row-border" id="dataTable" style="width:100%">
+								<table class="min-w-full">
 								<thead class="border-b">
 									<tr>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Tanggal
+									File Document
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									NIP
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Absen Masuk
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Absen Keluar
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Keluar
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Keluar
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Deskripsi Kegiatan
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Status
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									File
+									File Foto
 									</th>
 									</tr>
 								</thead>
 								<tbody>
-								<?php foreach ($data_all as $row) { ?>
 									<tr class="border-b">
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->updated_date ?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->job_nip ?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->attendance_entry ?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->attendance_return ?>
+										<?php
+										foreach($data_doc as $doc){
+											if (!empty($doc)) {
+												echo '<div class="mb-3"><a href="'.site_url($doc['doc_file_ket']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all h-10">Lihat File</a><a href="'.site_url('home/deleteDoc/'.$doc['id_doc'].'').'" class=" ml-3 p-1 bg-red-500 w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
+												} else {
+													echo 'Kosong';
+												}
+											};
+										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 										<?php
-										if (!empty($row->location_entry)) {
-											echo '<a href="https://google.com/maps/place/'.$row->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Lokasi 📌</a>';
-										} else {
-											echo '';
-										}
+										foreach($data_foto as $foto){
+											if (!empty($foto)) {
+												echo '<div class="mb-3"><a href="'.site_url($foto['foto_file']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><a href="'.site_url('home/deleteFoto/'.$foto['id_foto'].'').'" class=" ml-3 p-1 bg-red-500 w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
+												} else {
+													echo 'Kosong';
+												}
+											};
 										?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?php
-										if (!empty($row->location_return)) {
-											echo '<a href="https://google.com/maps/place/'.$row->location_return.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Lokasi 📌</a>';
-										} else {
-											echo '';
-										}
-										?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->job_desc ?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-										<?php 
-											if ($row->status_absent == "1") {
-												echo 'Masuk';
-											} else if ($row->status_absent == "2") {
-												echo 'Dinas Luar';
-											} else if ($row->status_absent == "3") {
-												echo 'Izin';
-											}else if ($row->status_absent == "4") {
-												echo 'Sakit';
-											}
-										?>
-									</td>
-									<td>
-										<a href="<?= base_url('home/lihatfile/'.$row->id_job) ?>"><i class="ace-icon fa fa-download text-info"></i></a>
 									</td>
 									</tr>
-									<?php } ?>
 								</tbody>
 								</table>
 							</div>
 							</div>
 						</div>
+                        </div>
 					</div>
 				</div>
 			</div>

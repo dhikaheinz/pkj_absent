@@ -41,6 +41,9 @@
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Status
 									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									File
+									</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -89,6 +92,9 @@
 												echo 'Dinas Luar';
 											}
 										?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<a href="<?= base_url('home/lihatfile/'.$row->id_job) ?>"><i class="ace-icon fa fa-download text-info"></i></a>
 									</td>
 									</tr>
 									<?php } ?>

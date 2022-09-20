@@ -1,7 +1,7 @@
 <?php $this->load->view('template/header'); ?>
 
     <div id="content" class="">
-		<div class="flex items-center justify-center h-screen -mt-14 transition-all">
+		<div class="flex items-center justify-center h-screen -mb-14 transition-all">
         <!-- Login Form -->
 			<div class="logo flex items-center justify-center flex-col">
 				<div class="h-10 mb-14">
@@ -9,7 +9,7 @@
 					<p class="text-center">Poltekkes Kemenkes Jakarta I</p>
 				</div>
 				<div class="px-8 py-6 text-left bg-white shadow-lg rounded-lg">
-					<h3 class="text-2xl font-bold text-center text-sky-700">Absen Pegawai Poltekkes</h3>
+					<h3 class="text-2xl font-bold text-center text-sky-700">Presensi Pegawai Poltekkes</h3>
 					<p class="text-center text-slate-600">Masukkan Data NIP dan Password</p>
 					<?php
 					echo $this->session->flashdata('success'); 
@@ -17,8 +17,8 @@
 					<form action="<?php echo site_url('User/aksi_login'); ?>" method="post">
 						<div class="mt-4">
 							<div>
-								<label class="block text-slate-600" for="username">Nomor NIP<label>
-										<input name="user_nip" type="text" placeholder="Nomor NIP Anda"
+								<label class="block text-slate-600" for="username">NIP<label>
+										<input name="user_nip" type="text" placeholder="NIP Anda"
 											class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 shadow-sm">
 							</div>
 							<div class="mt-4">
