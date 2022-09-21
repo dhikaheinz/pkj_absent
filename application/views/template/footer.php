@@ -25,8 +25,10 @@
 				<!-- Footer Close -->
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
       	<script>
-
+		
+		var btnKegiatan = document.getElementById("btnKegiatan");
 		var btnKegiatanFile = document.getElementById("btnKegiatanFile");
+		var btnKeluar = document.getElementById("btnKeluar");
 		var cekDescKeg = "<?php 
 			if(!empty($data_today_row->id_job)){
 			echo $data_today_row->id_job;
@@ -41,6 +43,14 @@
 			btnKegiatanFile.classList.add("bg-[#64b3f4]");
 			btnKegiatanFile.disabled = false;
 			// btnMasuk.classList.add("hover:bg-slate-400");
+
+			if (btnKeluar !== null) {
+				btnKeluar.classList.add("hover:bg-slate-400");
+				btnKeluar.classList.remove("bg-slate-400");
+				btnKeluar.classList.remove("cursor-not-allowed");
+				btnKeluar.classList.add("bg-[#64b3f4]");
+				btnKeluar.disabled = false;	
+			}
 		}
 
 			function Menu(e) {
@@ -70,10 +80,14 @@
 		// Get Location
 		// var x = document.getElementById("demo");
 		var gmap = document.getElementById("gmap_canvas");
+		var gmap_keluar = document.getElementById("gmap_canvas_keluar");
 
 		function getLocation() {
 			if (navigator.geolocation) {
 				navigator.geolocation.watchPosition(showPosition);
+				// gmap.src = "https://maps.google.com/maps?q="+ watchPosition.coords.latitude +","+ watchPosition.coords.longitude +"&t=&z=15&ie=UTF8&iwloc=&output=embed";
+				// document.getElementById("lokasi_user").value = watchPosition.coords.latitude+","+watchPosition.coords.longitude;
+				// document.getElementById("lokasi_user_keluar").value = watchPosition.coords.latitude+","+watchPosition.coords.longitude;
 			} else { 
 				// x.innerHTML = "Geolocation is not supported by this browser.";
 			}
@@ -83,41 +97,30 @@
 			// x.innerHTML="Latitude: " + position.coords.latitude + 
 			// "<br>Longitude: " + position.coords.longitude;
 			gmap.src = "https://maps.google.com/maps?q="+ position.coords.latitude +","+ position.coords.longitude +"&t=&z=15&ie=UTF8&iwloc=&output=embed";
-			document.getElementById("lokasi_user").value = position.coords.latitude+","+position.coords.longitude;
+			gmap_keluar.src = "https://maps.google.com/maps?q="+ position.coords.latitude +","+ position.coords.longitude +"&t=&z=15&ie=UTF8&iwloc=&output=embed";
+			document.getElementById("lokasi_user_masuk").value = position.coords.latitude+","+position.coords.longitude;
 			document.getElementById("lokasi_user_keluar").value = position.coords.latitude+","+position.coords.longitude;
 		}
 
 		function disabledLoc() {
-			var getLocBtn = document.getElementById("getLocBtn");
-			getLocBtn.disabled = true;
-			getLocBtn.classList.remove("bg-[#64b3f4]");
-			getLocBtn.classList.remove("hover:bg-slate-400");
-			getLocBtn.classList.add("bg-slate-400");
-			getLocBtn.classList.add("cursor-not-allowed");
-			getLocBtn.textContent = 'Lokasi Terkunci';
+			// var getLocBtn = document.getElementById("getLocBtn");
+			// getLocBtn.disabled = true;
+			// getLocBtn.classList.remove("bg-[#64b3f4]");
+			// getLocBtn.classList.remove("hover:bg-slate-400");
+			// getLocBtn.classList.add("bg-slate-400");
+			// getLocBtn.classList.add("cursor-not-allowed");
+			// getLocBtn.textContent = 'Lokasi Terkunci';
 
-			var btnMasuk = document.getElementById("btnMasuk");
-			btnMasuk.classList.add("hover:bg-slate-400");
-			btnMasuk.classList.remove("bg-slate-400");
-			btnMasuk.classList.remove("cursor-not-allowed");
-			btnMasuk.classList.add("bg-[#a2c082]");
-			btnMasuk.disabled = false;
-
-			if (cekDescKeg) {
-				var btnKeluar = document.getElementById("btnKeluar");
-				btnKeluar.classList.add("hover:bg-slate-400");
-				btnKeluar.classList.remove("bg-slate-400");
-				btnKeluar.classList.remove("cursor-not-allowed");
-				btnKeluar.classList.add("bg-[#a2c082]");
-				btnKeluar.disabled = false;	
-			} else {
-				
-			}
+			// var btnMasuk = document.getElementById("btnMasuk");
+			// btnMasuk.classList.add("hover:bg-slate-400");
+			// btnMasuk.classList.remove("bg-slate-400");
+			// btnMasuk.classList.remove("cursor-not-allowed");
+			// btnMasuk.classList.add("bg-[#a2c082]");
+			// btnMasuk.disabled = false;
 		}
 
 		$('.hide-it').delay(3000).fadeOut(1000);
 
-		var btnKegiatan = document.getElementById("btnKegiatan");
 		var cekMasuk = "<?php 
 			if(!empty($data_absent->attendance_entry)){
 			echo $data_absent->attendance_entry;
@@ -126,11 +129,19 @@
 			}
 			?>";
 		if (cekMasuk) {
-			btnKegiatan.classList.add("hover:bg-slate-400");
-			btnKegiatan.classList.remove("bg-slate-400");
-			btnKegiatan.classList.remove("cursor-not-allowed");
-			btnKegiatan.classList.add("bg-[#64b3f4]");
-			btnKegiatan.disabled = false;
+			if (cekDescKeg) {
+				btnKegiatan.classList.remove("hover:bg-slate-400");
+				btnKegiatan.classList.add("bg-slate-400");
+				btnKegiatan.classList.add("cursor-not-allowed");
+				btnKegiatan.classList.remove("bg-[#64b3f4]");
+				btnKegiatan.disabled = true;
+			} else {
+				btnKegiatan.classList.add("hover:bg-slate-400");
+				btnKegiatan.classList.remove("bg-slate-400");
+				btnKegiatan.classList.remove("cursor-not-allowed");
+				btnKegiatan.classList.add("bg-[#64b3f4]");
+				btnKegiatan.disabled = false;
+			}
 			// btnMasuk.classList.add("hover:bg-slate-400");
 			btnMasuk.classList.remove("bg-[#a2c082]");
 			btnMasuk.classList.add("bg-slate-400");

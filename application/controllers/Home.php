@@ -15,7 +15,7 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$ipaddress = '116.254.124.44';
+		$ipaddress = '116.254.128.44';
 		// if (getenv('HTTP_CLIENT_IP')){
 		// 	$ipaddress = getenv('HTTP_CLIENT_IP');
 		// }
@@ -360,7 +360,8 @@ class Home extends CI_Controller {
 
 	function editKegiatan($id){
 		$editKegiatan = array(
-			'job_desc' => $this->input->post("job_desc")
+			'job_desc' => $this->input->post("job_desc"),
+			'status_absent' => $this->input->post('status_absent')
 		);
 		
 		$this->M_Absent->editKegiatan($id, $editKegiatan);

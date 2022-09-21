@@ -70,9 +70,13 @@ class M_Absent extends CI_Model {
     }
 
     function get_data_all_without(){
-        $this->db->select('*');
+        $this->db->select('absent.updated_date AS tanggal, daily_job.job_nip, profile_name,
+        absent.attendance_entry, absent.attendance_return, absent.location_entry,
+        absent.location_return, daily_job.job_desc, daily_job.status_absent,
+        daily_job.id_job');
         $this->db->from('absent');
         $this->db->join('daily_job', 'absent.id_absent = daily_job.id_absent');
+        $this->db->join('profile', 'absent.absent_nip = profile.profile_nip');
         return $query = $this->db->get();
     }
 

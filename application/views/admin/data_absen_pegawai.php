@@ -7,7 +7,7 @@
 				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[auto] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
-							Administrator Data Absen Pegawai
+							Administrator Data Rekam Pegawai
 						</div>
 					</div>
                     <div class="flex flex-col">
@@ -24,10 +24,13 @@
 									NIP
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Absen Masuk
+									Nama
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Absen Keluar
+									Rekam Masuk
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Rekam Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Loc Keluar
@@ -50,10 +53,19 @@
 								<?php foreach ($data_all as $row) { ?>
 									<tr class="border-b">
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->updated_date ?>
+									<?php
+									$dateIndo = $row->tanggal;
+									$ex = explode("-",$dateIndo);
+							
+									$tgl = $ex[2].'-'.$ex[1].'-'.$ex[0];
+									echo $tgl;
+									?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->job_nip ?>
+									<?= $row->job_nip ?>'
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->profile_name ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->attendance_entry ?>
@@ -87,14 +99,29 @@
 											if ($row->status_absent == "1") {
 												echo 'Masuk';
 											} else if ($row->status_absent == "2") {
-												echo 'Izin';
-											} else if ($row->status_absent == "2") {
 												echo 'Dinas Luar';
+											} else if ($row->status_absent == "3") {
+												echo 'Izin';
+											}else if ($row->status_absent == "4") {
+												echo 'Sakit';
+											}else if ($row->status_absent == "5") {
+												echo 'Bimbingan';
+											}else if ($row->status_absent == "6") {
+												echo 'Penelitian';
+											}else if ($row->status_absent == "7") {
+												echo 'Pengabdian Masyarakat';
 											}
 										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<a href="<?= base_url('home/lihatfile/'.$row->id_job) ?>"><i class="ace-icon fa fa-download text-info"></i></a>
+										<?php 
+										if ($row->id_job) {
+											echo '<a href="'.base_url('home/lihatfile/'.$row->id_job).'"><i class="ace-icon fa fa-download text-info"></i></a>';
+										} else {
+											# code...
+										}
+										
+										?>
 									</td>
 									</tr>
 									<?php } ?>
@@ -105,7 +132,7 @@
 						</div>
 					</div>
 					<div class="flex items-center justify-center flex-row mt-2 gap-1 transition-all">
-						<a href="<?= base_url('admin/dataAbsen') ?>" class="bg-[#a2c082] text-white p-5 rounded-lg hover:bg-slate-400 transition-all">Data Absensi Pegawai</a>
+						<a href="<?= base_url('admin/dataAbsen') ?>" class="bg-[#a2c082] text-white p-5 rounded-lg hover:bg-slate-400 transition-all">Data Rekam Pegawai</a>
 						<a href="<?= base_url('admin/akunPegawai') ?>" class="bg-[#a2c082] text-white p-5 rounded-lg hover:bg-slate-400 transition-all">Data Akun Pegawai</a>
 					</div>
 				</div>

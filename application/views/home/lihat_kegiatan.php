@@ -8,7 +8,7 @@
 				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[1200px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
-							Absen Pegawai
+						  Rekam Pegawai
 						</div>
 						<?php
 							echo $this->session->flashdata('success'); 
@@ -33,10 +33,10 @@
 									NIP
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Absen Masuk
+									Rekam Masuk
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Absen Keluar
+									Rekam Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Loc Keluar
@@ -101,6 +101,12 @@
 												echo 'Izin';
 											}else if ($row->status_absent == "4") {
 												echo 'Sakit';
+											}else if ($row->status_absent == "5") {
+												echo 'Bimbingan';
+											}else if ($row->status_absent == "6") {
+												echo 'Penelitian';
+											}else if ($row->status_absent == "7") {
+												echo 'Pengabdian Masyarakat';
 											}
 										?>
 									</td>

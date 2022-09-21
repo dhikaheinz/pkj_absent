@@ -38,7 +38,7 @@
 				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 md:w-[384px] lg:w-[500px] xl:w-[800px] : p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
-							Absen Pegawai
+							Rekam Pegawai
 						</div>
 						<?php
 							echo $this->session->flashdata('success'); 
@@ -65,36 +65,46 @@
 						</div>
 						<div class="konten-profil flex items-start justify-center md:items-start md:justify-start flex-col md:flex-row mt-5 shadow-md py-5 transition-all">
 							<div class="nomor-antrian ml-3">
-								Absen Masuk &nbsp;:<span class="p-1 m-2 bg-red-500 rounded-md text-white">
+								Rekam Masuk &nbsp;:
 									<?php 
 									if(!empty($data_absent->attendance_entry)){
-										echo $data_absent->attendance_entry;
+										echo '<span class="p-1 m-2 bg-blue-500 rounded-md text-white">'.$data_absent->attendance_entry.'</span>';
 										}else{
-										echo "Belum Absen Masuk";
+											date_default_timezone_set("Asia/Bangkok");
+											// $jam = date("H");
+											// $menit = date("i");
+											// if ($jam >= 6 && $jam <= 15) {
+												echo '<button type="button" id="btnMasuk" onclick="getLocation()" class="text-white p-1 rounded-md bg-[#64b3f4] hover:bg-slate-500 transition-all" data-bs-toggle="modal" data-bs-target="#AbsenMasuk">Rekam Masuk</button>';
+											// };
 										}
 										 ?>
-										 </span>&nbsp;|&nbsp;
+										 &nbsp;|&nbsp;
 										 <?php 
 									if(!empty($data_absent->location_entry)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Loc 📌</a>';
+										echo '<a href="https://google.com/maps/place/'.$data_absent->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">📌</a>';
 										}else{
 										echo "";
 										}
-										 ?>
+										?>
 							</div>
 							<div class="tgl-antrian mt-5 md:mt-0 ml-3">
-								Absen Pulang :<span class="p-1 m-2 bg-red-500 rounded-md text-white">
+								Rekam Pulang :
 								<?php 
 									if(!empty($data_absent->attendance_return)){
-										echo $data_absent->attendance_return;
+										echo '<span class="p-1 m-2 bg-blue-500 rounded-md text-white">'.$data_absent->attendance_return;'</span>';
 										}else{
-										echo "Belum Absen Pulang";
+											date_default_timezone_set("Asia/Bangkok");
+											// $jam = date("H");
+											// $menit = date("i");
+											// if ($jam >= 15 || $jam <= 6) {
+												echo '<button type="button" id="btnKeluar" onclick="getLocation()" class="text-white p-1 rounded-md bg-slate-400 cursor-not-allowed transition-all" data-bs-toggle="modal" data-bs-target="#AbsenKeluar" disabled>Absen Keluar</button>';
+											// };
 										}
 										 ?>	
 										</span>&nbsp;|&nbsp;
 										 <?php 
 									if(!empty($data_absent->location_return)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#a2c082] rounded-md text-white hover:bg-slate-400">📌</a>';
+										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">📌</a>';
 										}else{
 										echo "";
 										}
@@ -105,47 +115,20 @@
 						<?php //} ?>
 					</div>
 							<!-- absen masuk  -->
-						<form action="<?php echo site_url('home/absentMasuk'); ?>" method="post">
-						<input id="lokasi_user" name="lokasi_user" type="text" value="" hidden>
+
 						<div class="flex items-center justify-center flex-row mt-5 gap-1 transition-all">
-							<button id="getLocBtn" type="button" onclick="getLocation()" class="bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all" data-bs-toggle="modal" data-bs-target="#exampleModal">Konfirmasi Lokasi</button>
-								<?php 
-									date_default_timezone_set("Asia/Bangkok");
-									// $jam = date("H");
-									// $menit = date("i");
-									// if ($jam >= 6 && $jam <= 15) {
-										echo '<button type="submit" id="btnMasuk" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Masuk</button>';
-									// };
-								?>
-						</form>
+							<!-- <button id="getLocBtn" type="button" onclick="getLocation()" class="bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all" data-bs-toggle="modal" data-bs-target="#exampleModal">Konfirmasi Lokasi</button> -->
 						<!-- absen masuk  -->
 							
 						<!-- input kegiatan -->
 						<!-- <form action="<?php //echo site_url('home/absentKegiatan'); ?>" method="post"> -->
 						<button type="button" id="btnKegiatan" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatan" disabled>Input Kegiatan</button>
-						<button type="button" id="btnKegiatanFile" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Buat Data Kegiatan Harian Terlebih Hahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatanFile" disabled>Upload File Kegiatan</button>
+						<button type="button" id="btnKegiatanFile" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Buat Data Kegiatan Harian Terlebih Hahulu" data-bs-toggle="modal" data-bs-target="#inputKegiatanFile" disabled>Upload File</button>
 						<!-- </form> -->
 						<!-- input kegiatan  -->
 
 						<!-- absen keluar -->
-						<form action="
-						<?php 
-						if(!empty($data_absent->id_absent)){
-							echo site_url('home/absentKeluar/'.$data_absent->id_absent.'');
-							}else{
-							echo "";
-							} 
-						?>" method="post">
-						<input id="lokasi_user_keluar" name="lokasi_user_keluar" type="text" value="" hidden>
-							<?php 
-								date_default_timezone_set("Asia/Bangkok");
-								// $jam = date("H");
-								// $menit = date("i");
-								// if ($jam >= 15 || $jam <= 6) {
-									echo '<button type="submit" id="btnKeluar" class="text-white p-2 rounded-md bg-slate-400 cursor-not-allowed transition-all" title="Konfirmasi Lokasi Terlebih Dahulu" disabled>Absen Keluar</button>';
-								// };
-							?>
-						</form>
+						
 						<!-- absen keluar -->
 					</div>
 					<div class="konten-profil mt-2 shadow-md py-5 transition-all w-full">
@@ -231,8 +214,8 @@
 				</div>
 				</div>
 					<div class="bg-[#c8dab6] p-2 rounded-md">
-						Absen masuk dapat dilakukan setelah jam <b>06:00</b>. <br>
-						Absen pulang hanya dapat dilakukan pada jam berikut : <br><br>
+						Rekam masuk dapat dilakukan setelah jam <b>06:00</b>. <br>
+						Rekam pulang hanya dapat dilakukan pada jam berikut : <br><br>
 						1. Senin s.d. Kamis pada pukul <b>15.00</b>, dan <br>
 						2. Jumat pada pukul <b>15.30</b> <br>
 						Unggah file kegiatan online hanya diperbolehkan <b>file gambar (jpg, jpeg, png)</b>. <br>
@@ -244,9 +227,9 @@
      	</div>
     </div>
 
-	<!-- Modal -->
+	<!-- Modal Absen Masuk -->
 	<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-	id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	id="AbsenMasuk" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog relative w-auto pointer-events-none">
 			<div
 			class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
@@ -283,24 +266,101 @@
 				transition
 				duration-150
 				ease-in-out" data-bs-dismiss="modal">Tutup</button>
-				<button type="button" class="px-6
-			py-2.5
-			bg-sky-600
-			text-white
-			font-medium
-			text-xs
-			leading-tight
-			uppercase
-			rounded
-			shadow-md
-			hover:bg-sky-700 hover:shadow-lg
-			focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0
-			active:bg-sky-800 active:shadow-lg
-			transition
-			duration-150
-			ease-in-out
-			ml-1" data-bs-dismiss="modal" onclick="disabledLoc()">Simpan Lokasi</button>
+				<form action="<?php echo site_url('home/absentMasuk'); ?>" method="post">
+						<input id="lokasi_user_masuk" name="lokasi_user" type="text" value="" hidden>
+							<!-- <div class="flex items-center justify-center flex-row mt-5 gap-1 transition-all"> -->
+							<!-- <button id="getLocBtn" type="button" onclick="getLocation()" class="bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all" data-bs-toggle="modal" data-bs-target="#exampleModal">Konfirmasi Lokasi</button> -->
+						
+				<button type="submit" class="px-6
+				py-2.5
+				bg-sky-600
+				text-white
+				font-medium
+				text-xs
+				leading-tight
+				uppercase
+				rounded
+				shadow-md
+				hover:bg-sky-700 hover:shadow-lg
+				focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0
+				active:bg-sky-800 active:shadow-lg
+				transition
+				duration-150
+				ease-in-out
+				ml-1" data-bs-dismiss="modal">Konfirmasi Absen Masuk</button>
+				</form>
 			</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Absen Keluar -->
+	<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+	id="AbsenKeluar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog relative w-auto pointer-events-none">
+			<div
+			class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+			<div
+				class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+				<h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Lokasi Anda Sekarang</h5>
+				<button type="button"
+				class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+				data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body relative p-4">
+					<div class="mapouter">
+						<div class="gmap_canvas mx-auto">
+							<iframe width="100%" height="400" id="gmap_canvas_keluar" src="https://maps.google.com/maps?&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+							</iframe>
+						</div>
+					</div>
+			</div>
+			<div
+				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+				<button type="button" class="px-6
+				py-2.5
+				bg-red-600
+				text-white
+				font-medium
+				text-xs
+				leading-tight
+				uppercase
+				rounded
+				shadow-md
+				hover:bg-red-700 hover:shadow-lg
+				focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0
+				active:bg-red-800 active:shadow-lg
+				transition
+				duration-150
+				ease-in-out" data-bs-dismiss="modal">Tutup</button>
+				<form action="
+						<?php 
+						if(!empty($data_absent->id_absent)){
+							echo site_url('home/absentKeluar/'.$data_absent->id_absent.'');
+							}else{
+							echo "";
+							} 
+						?>" method="post">
+						<input id="lokasi_user_keluar" name="lokasi_user_keluar" type="text" value="" hidden>
+				<button type="submit" class="px-6
+				py-2.5
+				bg-sky-600
+				text-white
+				font-medium
+				text-xs
+				leading-tight
+				uppercase
+				rounded
+				shadow-md
+				hover:bg-sky-700 hover:shadow-lg
+				focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0
+				active:bg-sky-800 active:shadow-lg
+				transition
+				duration-150
+				ease-in-out
+				ml-1" data-bs-dismiss="modal">Konfirmasi Absen Masuk</button>
+				</form>
+				</div>
 			</div>
 		</div>
 	</div>

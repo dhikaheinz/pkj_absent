@@ -8,7 +8,7 @@
 				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[1200px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
 	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
-							Absen Pegawai
+							Rekam Pegawai
 						</div>
 						<?php
 							echo $this->session->flashdata('success'); 
@@ -17,15 +17,7 @@
 					</div>
 					<div class="konten-profil mt-2 shadow-md py-5 transition-all w-full">
 						<div class="mb-3">
-							<a href="
-                            <?php 
-                                if ($this->session->userdata('status') === 'login') {
-                                    echo site_url('');
-                                }else if ($this->session->userdata('status') === 'admin') {
-                                    echo site_url('');
-                                }
-                            ?>
-                            " class="p-2 rounded-md bg-[#64b3f4] mb-3 hover:bg-slate-500 text-white">Kembali</a>
+							<a href="#" onclick="history.back()" class="p-2 rounded-md bg-[#64b3f4] mb-3 hover:bg-slate-500 text-white">Kembali</a>
 						</div>
 						<div class="flex flex-col">
                         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">

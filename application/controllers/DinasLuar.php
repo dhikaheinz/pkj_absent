@@ -14,7 +14,7 @@ class DinasLuar extends CI_Controller {
     }
 
     function index(){
-		$ipaddress = '116.254.124.44';
+		$ipaddress = '116.254.128.44';
 		$ipExplode = explode(".",$ipaddress);
 		if ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '2') {
 			if ($ipExplode[0] == 116 && $ipExplode[1] == 254 && $ipExplode[2] == 124 || $ipExplode[2] == 125) {
@@ -28,6 +28,7 @@ class DinasLuar extends CI_Controller {
 				$data['get_data_doc'] = $this->M_Absent->get_data_doc()->result_array();
 				$data['get_data_foto'] = $this->M_Absent->get_data_foto()->result_array();
 				// $data['data_all'] = $this->M_Absent->get_data_all_akun()->result();
+				// print_r($data['data_today_row']);
 				$this->load->view('dinasLuar/index', $data);
 			}
 		}elseif ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '1') {

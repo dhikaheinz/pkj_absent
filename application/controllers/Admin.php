@@ -20,6 +20,7 @@ class Admin extends CI_Controller {
 
 	function dataAbsen(){
 		$data['data_all'] = $this->M_Absent->get_data_all_without()->result();
+		// print_r($data['data_all']);
 		$this->load->view('admin/data_absen_pegawai', $data);
 	}
 
