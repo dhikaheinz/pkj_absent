@@ -28,7 +28,7 @@ class DinasLuar extends CI_Controller {
 				$data['get_data_doc'] = $this->M_Absent->get_data_doc()->result_array();
 				$data['get_data_foto'] = $this->M_Absent->get_data_foto()->result_array();
 				// $data['data_all'] = $this->M_Absent->get_data_all_akun()->result();
-				// print_r($data['data_today_row']);
+				// print_r($data['data_today_foto']);
 				$this->load->view('dinasLuar/index', $data);
 			}
 		}elseif ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '1') {

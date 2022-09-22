@@ -62,7 +62,7 @@
 									?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->job_nip ?>'
+									&apos;<?= $row->job_nip ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->profile_name ?>

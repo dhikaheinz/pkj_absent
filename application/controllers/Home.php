@@ -86,13 +86,15 @@ class Home extends CI_Controller {
 
 	function absentMasuk(){
 		$data_absent_masuk = array(
-		'absent_nip' => $this->session->userdata('user_nip'),
-		'attendance_entry' => date('H:i:s'),
-		'location_entry' => $this->input->post("lokasi_user"),
-		'created_by' => $this->session->userdata('id_user'),
-		'updated_date' => date('Y-m-d')
+			'absent_nip' => $this->session->userdata('user_nip'),
+			'attendance_entry' => date('H:i:s'),
+			'location_entry' => $this->input->post("lokasi_user"),
+			'created_by' => $this->session->userdata('id_user'),
+			'updated_date' => date('Y-m-d')
 		);
-            
+		
+		$this->M_Absent->data_absent_kegiatan($data_absent_kegiatan);
+
 		$this->M_Absent->insert_absent_masuk($data_absent_masuk);
 		$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-[#64b3f4] my-3 p-2 rounded-md">Absen Masuk Telah Disimpan</p>');
 		redirect('home');

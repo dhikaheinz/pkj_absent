@@ -30,6 +30,9 @@
 									Tanggal
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Nama
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									NIP
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
@@ -39,7 +42,7 @@
 									Rekam Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Keluar
+									Loc Masuk
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Loc Keluar
@@ -59,10 +62,19 @@
 								<?php foreach ($data_all as $row) { ?>
 									<tr class="border-b">
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->updated_date ?>
+									<?php
+									$dateIndo = $row->tanggal;
+									$ex = explode("-",$dateIndo);
+							
+									$tgl = $ex[2].'-'.$ex[1].'-'.$ex[0];
+									echo $tgl;
+									?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->job_nip ?>
+									<?= $row->profile_name ?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									&apos;<?= $row->job_nip ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->attendance_entry ?>

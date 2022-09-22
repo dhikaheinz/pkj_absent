@@ -5,7 +5,7 @@
         <!-- Login Form -->
 			<div class="logo flex items-center justify-center flex-col">
 				<div class="h-10 mb-14">
-					<img class="w-56" src="<?= base_url('assets/img/bigdata_polkesjasa.png'); ?>" alt="">
+					<img class="w-56" src="/assets/img/bigdata_polkesjasa.png" alt="">
 					<p class="text-center">Poltekkes Kemenkes Jakarta I</p>
 				</div>
 				<div class="px-8 py-6 text-left bg-white shadow-lg rounded-lg">

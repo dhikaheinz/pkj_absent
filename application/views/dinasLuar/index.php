@@ -53,7 +53,7 @@
 								$jam = date("H");
 								$menit = date("i");
 								if ($jam >= 15 || $jam <= 6) {
-									echo '<div class="mt-2 text-lg text-white p-3 bg-red-500 w-full rounded-md">Tidak Bisa Absen Pulang Jika Belum Melakukan Input Kegiatan Harian</div>
+									echo '<div class="mt-2 text-lg text-white p-3 bg-[#64b3f4] w-full rounded-md">Tidak Bisa Absen Pulang Jika Belum Melakukan Input Kegiatan Harian</div>
 									<div>
 									<button type="button" onclick="closeSidePulang()" class="-ml-7 mt-3 overflow-auto text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
 									<svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -618,7 +618,7 @@
 			class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
 			<div
 				class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-				<h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Edit Kegiatan Hari ini</h5>
+				<h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Edit Kegiatan Anda Hari Ini?</h5>
 				<button type="button"
 				class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
 				data-bs-dismiss="modal" aria-label="Close"></button>
@@ -630,28 +630,6 @@
 					<div>
 						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Deskripsi Kegiatan : </label>
 						<textarea id="summernote-edit" name="job_desc"></textarea>
-						<!-- <textarea
-						class="
-							form-control
-							block
-							w-full
-							px-3
-							py-1.5
-							text-base
-							font-normal
-							text-gray-700
-							bg-white bg-clip-padding
-							border border-solid border-gray-300
-							rounded
-							transition
-							ease-in-out
-							m-0
-							focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-						"
-						name="job_desc"
-						rows="3"
-						placeholder="Masukkan Kegiatan Hari ini"
-						></textarea> -->
 					</div>
 					<div>
 					<input type="text" name="id_absent" value="
@@ -663,98 +641,103 @@
 							}
 						?>
 					" hidden>
-					
 					</div>
 					<div>
-					<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Status Absen : </label>
-					<div class="flex justify-start">
-					<div>
-						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="2" type="radio" name="status_absent" id="flexRadioDefault1"
-						<?php 
-						if($data_today_row->status_absent == "2"){
-							echo "checked";
-							}else{
-							echo "";
-							}
-						?>
-						>
-						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault1">
-							Dinas Luar (Lampirkan Surat)
-						</label>
+						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Status Absen : </label>
+						<div class="flex justify-start">
+							<div>
+								<div class="form-check">
+									<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="2" type="radio" name="status_absent" id="dinas"
+									<?php 
+									if (!empty($data_today_row->status_absent)) {
+										if($data_today_row->status_absent == "2"){
+											echo "checked";
+											}else{
+											echo "";
+											}
+									}
+									?>>
+									<label class="form-check-label inline-block text-gray-800" for="dinas">
+										Dinas Luar (Lampirkan Surat)
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="3" type="radio" name="status_absent" id="izin"
+									<?php 
+									if (!empty($data_today_row->status_absent)) {
+									if($data_today_row->status_absent == "3"){
+										echo "checked";
+										}else{
+										echo "";
+										}
+									}
+									?>>
+									<label class="form-check-label inline-block text-gray-800" for="izin">
+										Izin (Lampirkan Surat)
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="4" type="radio" name="status_absent" id="sakit"
+									<?php 
+									if (!empty($data_today_row->status_absent)) {
+									if($data_today_row->status_absent == "4"){
+										echo "checked";
+										}else{
+										echo "";
+										}
+									}
+									?>>
+									<label class="form-check-label inline-block text-gray-800" for="sakit">
+										Sakit (Lampirkan Surat)
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="5" type="radio" name="status_absent" id="bimbingan"
+									<?php 
+									if (!empty($data_today_row->status_absent)) {
+									if($data_today_row->status_absent == "5"){
+										echo "checked";
+										}else{
+										echo "";
+										}
+									}
+									?>>
+									<label class="form-check-label inline-block text-gray-800" for="bimbingan">
+										Bimbingan
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="6" type="radio" name="status_absent" id="penelitian"
+									<?php 
+									if (!empty($data_today_row->status_absent)) {
+									if($data_today_row->status_absent == "6"){
+										echo "checked";
+										}else{
+										echo "";
+										}
+									}
+									?>>
+									<label class="form-check-label inline-block text-gray-800" for="penelitian">
+										Penelitian
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="7" type="radio" name="status_absent" id="pengabdian"
+									<?php 
+									if (!empty($data_today_row->status_absent)) {
+									if($data_today_row->status_absent == "7"){
+										echo "checked";
+										}else{
+										echo "";
+										}
+									}
+									?>>
+									<label class="form-check-label inline-block text-gray-800" for="pengabdian">
+										Pengabdian Masyarakat
+									</label>
+								</div>
+							</div>
 						</div>
-						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="3" type="radio" name="status_absent" id="flexRadioDefault2"
-						<?php 
-						if($data_today_row->status_absent == "3"){
-							echo "checked";
-							}else{
-							echo "";
-							}
-						?>
-						>
-						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault2">
-							Izin (Lampirkan Surat)
-						</label>
-						</div>
-						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="4" type="radio" name="status_absent" id="flexRadioDefault3"
-						<?php 
-						if($data_today_row->status_absent == "4"){
-							echo "checked";
-							}else{
-							echo "";
-							}
-						?>
-						>
-						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault3">
-							Sakit (Lampirkan Surat)
-						</label>
-						</div>
-						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="5" type="radio" name="status_absent" id="flexRadioDefault4"
-						<?php 
-						if($data_today_row->status_absent == "5"){
-							echo "checked";
-							}else{
-							echo "";
-							}
-						?>
-						>
-						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault4">
-							Bimbingan
-						</label>
-						</div>
-						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="6" type="radio" name="status_absent" id="flexRadioDefault5"
-						<?php 
-						if($data_today_row->status_absent == "6"){
-							echo "checked";
-							}else{
-							echo "";
-							}
-						?>
-						>
-						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault5">
-							Penelitian
-						</label>
-						</div>
-						<div class="form-check">
-						<input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="7" type="radio" name="status_absent" id="flexRadioDefault6"
-						<?php 
-						if($data_today_row->status_absent == "7"){
-							echo "checked";
-							}else{
-							echo "";
-							}
-						?>
-						>
-						<label class="form-check-label inline-block text-gray-800" for="flexRadioDefault6">
-							Pengabdian Masyarakat
-						</label>
-						</div>
-					</div>
-					</div>
 					</div>
 				</div>
 			</div>
@@ -792,12 +775,13 @@
 			transition
 			duration-150
 			ease-in-out
-			ml-1" data-bs-dismiss="modal">Edit Data</button>
+			ml-1" data-bs-dismiss="modal">Simpan Data</button>
 			</div>
 			</form>
 			</div>
 		</div>
 	</div>
+
 	<script>
 		$('#summernote').summernote({
 		disableDragAndDrop: true,
