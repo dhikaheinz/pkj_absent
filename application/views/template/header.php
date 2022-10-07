@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/x-icon" href="<?= base_url('assets/img/logo.png') ?>" />
+		<link rel="icon" type="image/x-icon" href="/assets/img/logo.png" />
 		<title>Absensi Pegawai Poltekkes | Poltekkes Jakarta I</title>
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
@@ -57,16 +57,16 @@
 			<ul
 				class="md:flex md:items-center md:bg-transparent bg-[#b5d691] z-[10] md:z-auto md:static absolute w-full left-0 md:w-auto md:py-0 py-2 px-2 md:pl-0 md:opacity-100 opacity-0 top-[-400px] transition-all"
 			>
-			<a href="<?= base_url() ?>" class="text-xl text-white font-semibold hover:text-black">
+			<a href="/" class="text-xl text-white font-semibold hover:text-black">
 				<li class="px-4 py-3 md:my-0 hover:bg-[#c2e59c] h-full rounded-md">
 				Home
 				</li>
 			</a>
-			<!-- <a href="" class="text-xl text-white font-semibold hover:text-black">
+			<a href="/workunit" class="text-xl text-white font-semibold hover:text-black">
 				<li class="px-4 py-3 md:my-0 hover:bg-[#c2e59c] h-full rounded-md">
-				Kritik Dan Saran
+				Kegiatan Unit
 				</li>
-			</a> -->
+			</a>
 
             <?php 
 				$nip_login = '';
@@ -75,13 +75,13 @@
 				}
 
                 if ($this->session->userdata('status') != "login") {
-                    echo '<a href="'.base_url().'" class="text-xl text-white font-semibold hover:text-black">
+                    echo '<a href="" class="text-xl text-white font-semibold hover:text-black">
                     <li class="px-4 py-3 md:my-0 hover:bg-[#c2e59c] h-full rounded-md">
                     Login
                     </li>
                     </a>';
                 }else {
-                    echo '<a href="'.base_url('user/logout').'" class="text-xl text-white font-semibold hover:text-black">
+                    echo '<a href="/user/logout" class="text-xl text-white font-semibold hover:text-black">
                     <li class="px-4 py-3 md:my-0 hover:bg-[#c2e59c] h-full rounded-md">
                     Logout ('.$nip_login.')
                     </li>

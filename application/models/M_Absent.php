@@ -64,23 +64,25 @@ class M_Absent extends CI_Model {
     function get_data_all(){
         $this->db->select('absent.updated_date AS tanggal, daily_job.job_nip, profile_name,
         absent.attendance_entry, absent.attendance_return, absent.location_entry,
-        absent.location_return, daily_job.job_desc, daily_job.status_absent,
-        daily_job.id_job');
+        absent.location_return, daily_job.job_desc,
+        daily_job.id_job, absent.status_absen_masuk, absent.status_absen_keluar');
         $this->db->from('absent');
         $this->db->join('daily_job', 'absent.id_absent = daily_job.id_absent');
         $this->db->join('profile', 'absent.absent_nip = profile.profile_nip');
         $this->db->where('absent.absent_nip', $this->session->userdata('user_nip'));
+        $this->db->order_by('absent.updated_date', 'desc');
         return $query = $this->db->get();
     }
 
     function get_data_all_without(){
         $this->db->select('absent.updated_date AS tanggal, daily_job.job_nip, profile_name,
         absent.attendance_entry, absent.attendance_return, absent.location_entry,
-        absent.location_return, daily_job.job_desc, daily_job.status_absent,
-        daily_job.id_job');
+        absent.location_return, daily_job.job_desc,
+        daily_job.id_job, absent.status_absen_masuk, absent.status_absen_keluar, absent.absen_ket');
         $this->db->from('absent');
         $this->db->join('daily_job', 'absent.id_absent = daily_job.id_absent');
         $this->db->join('profile', 'absent.absent_nip = profile.profile_nip');
+        $this->db->order_by('absent.updated_date', 'desc');
         return $query = $this->db->get();
     }
 
@@ -121,6 +123,10 @@ class M_Absent extends CI_Model {
         $this->db->update('daily_job', $data);
     }
 
+    function editStatusKeluar($id, $data){
+        $this->db->where('id_absent', $id);
+        $this->db->update('daily_job', $data);
+    }
     
 	function detail_profil(){
 		$this->db->select();

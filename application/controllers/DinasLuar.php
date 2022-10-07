@@ -14,7 +14,27 @@ class DinasLuar extends CI_Controller {
     }
 
     function index(){
-		$ipaddress = '116.254.128.44';
+		function get_client_ip() {
+			$ipaddress = '';
+			if (getenv('HTTP_CLIENT_IP'))
+				$ipaddress = getenv('HTTP_CLIENT_IP');
+			else if(getenv('HTTP_X_FORWARDED_FOR'))
+				$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+			else if(getenv('HTTP_X_FORWARDED'))
+				$ipaddress = getenv('HTTP_X_FORWARDED');
+			else if(getenv('HTTP_FORWARDED_FOR'))
+				$ipaddress = getenv('HTTP_FORWARDED_FOR');
+			else if(getenv('HTTP_FORWARDED'))
+			   $ipaddress = getenv('HTTP_FORWARDED');
+			else if(getenv('REMOTE_ADDR'))
+				$ipaddress = getenv('REMOTE_ADDR');
+			else
+				$ipaddress = 'IP tidak dikenali';
+			return $ipaddress;
+		}
+		// echo "Your IP Address :". get_client_ip();
+		// $ipaddress = "116.254.129.82";
+		$ipaddress = get_client_ip();
 		$ipExplode = explode(".",$ipaddress);
 		if ($this->session->userdata('status') == 'login' && $this->session->userdata('level') == '2') {
 			if ($ipExplode[0] == 116 && $ipExplode[1] == 254 && $ipExplode[2] == 124 || $ipExplode[2] == 125) {

@@ -1,23 +1,34 @@
 <?php $this->load->view('template/header'); ?>
 
     <div id="content" class="">
-		<div class="flex items-center justify-center md:h-screen -mt-14 transition-all">
+		<div class="lg:my-10 flex items-center justify-center md:h-screen -mb-14 transition-all">
 			<!-- flex content -->
 			<div class="dashboard flex items-center justify-center rounded-lg flex-col md:flex-row gap-3 transition-all mt-48 mb-20 md:my-0">
 				
 				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 lg:w-[1200px] md:w-[384px] p-6 shadow-lg rounded-lg bg-white transition-all">
 					<div class="flex md:justify-start flex-col w-full transition-all">
-	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
-						  Rekam Pegawai
+	  					<div class="uppercase title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
+						  Daftar Rekam Pegawai
 						</div>
 						<?php
 							echo $this->session->flashdata('success'); 
 						?>
 						
 					</div>
-					<div class="konten-profil mt-2 shadow-md py-5 transition-all w-full">
-						<div class="mb-3">
-							<a href="<?= base_url() ?>" class="p-2 rounded-md bg-[#64b3f4] mb-3 hover:bg-slate-500 text-white">Kembali</a>
+					<div class="konten-profil mb-3 -mt-3 shadow-md py-5 transition-all w-full">
+						<div class="flex flex-col w-full my-3">
+							<div class="flex flex-row">
+								<div class="w-20">Nama</div>
+								<div class="">: <?= $data_pegawai->profile_name ?></div>
+							</div>
+							<div class="flex flex-row">
+								<div class="w-20">NIP</div>
+								<div class="">: <?= $data_pegawai->profile_nip ?></div>
+							</div>
+						</div>
+						<hr class="border-[1px] border-black mt-2">
+						<div class="my-5">
+							<a href="/" class="p-2 rounded-md bg-[#64b3f4] mb-3 hover:bg-slate-500 text-white">Kembali</a>
 						</div>
 						<div class="flex flex-col">
 						<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -30,28 +41,19 @@
 									Tanggal
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Nama
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									NIP
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Rekam Masuk
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Rekam Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Masuk
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Keluar
-									</th>
-									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Deskripsi Kegiatan
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Status
+									Status Masuk
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Status Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									File
@@ -71,59 +73,74 @@
 									?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->profile_name ?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									&apos;<?= $row->job_nip ?>
-									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->attendance_entry ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->attendance_return ?>
 									</td>
-									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<!-- <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 										<?php
-										if (!empty($row->location_entry)) {
-											echo '<a href="https://google.com/maps/place/'.$row->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Lokasi 📌</a>';
-										} else {
-											echo '';
-										}
+										// if (!empty($row->location_entry)) {
+										// 	echo '<a href="https://google.com/maps/place/'.$row->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">Lokasi</a>';
+										// } else {
+										// 	echo '';
+										// }
 										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?php
-										if (!empty($row->location_return)) {
-											echo '<a href="https://google.com/maps/place/'.$row->location_return.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Lokasi 📌</a>';
-										} else {
-											echo '';
-										}
-										?>
-									</td>
+										// if (!empty($row->location_return)) {
+										// 	echo '<a href="https://google.com/maps/place/'.$row->location_return.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">Lokasi</a>';
+										// } else {
+										// 	echo '';
+										// }
+										// ?>
+									</td> -->
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?= $row->job_desc ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 										<?php 
-											if ($row->status_absent == "1") {
-												echo 'Masuk';
-											} else if ($row->status_absent == "2") {
+											if ($row->status_absen_masuk == "1") {
+												echo 'Masuk (Dalam)';
+											} else if ($row->status_absen_masuk == "2") {
 												echo 'Dinas Luar';
-											} else if ($row->status_absent == "3") {
+											} else if ($row->status_absen_masuk == "3") {
 												echo 'Izin';
-											}else if ($row->status_absent == "4") {
+											}else if ($row->status_absen_masuk == "4") {
 												echo 'Sakit';
-											}else if ($row->status_absent == "5") {
+											}else if ($row->status_absen_masuk == "5") {
 												echo 'Bimbingan';
-											}else if ($row->status_absent == "6") {
+											}else if ($row->status_absen_masuk == "6") {
 												echo 'Penelitian';
-											}else if ($row->status_absent == "7") {
+											}else if ($row->status_absen_masuk == "7") {
 												echo 'Pengabdian Masyarakat';
 											}
 										?>
 									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+										<?php 
+											if ($row->status_absen_keluar == "1") {
+												echo 'Masuk';
+											} else if ($row->status_absen_keluar == "2") {
+												echo 'Dinas Luar (Luar)';
+											} else if ($row->status_absen_keluar == "3") {
+												echo 'Izin';
+											}else if ($row->status_absen_keluar == "4") {
+												echo 'Sakit';
+											}else if ($row->status_absen_keluar == "5") {
+												echo 'Bimbingan';
+											}else if ($row->status_absen_keluar == "6") {
+												echo 'Penelitian';
+											}else if ($row->status_absen_keluar == "7") {
+												echo 'Pengabdian Masyarakat';
+											}else if ($row->status_absen_keluar == "10") {
+												echo 'Belum Absen';
+											}
+										?>
+									</td>
 									<td>
-										<a href="<?= base_url('home/lihatfile/'.$row->id_job) ?>"><i class="ace-icon fa fa-download text-info"></i></a>
+										<a href="/home/lihatfile/<?=$row->id_job?>"><i class="fa fa-file" aria-hidden="true"></i></a>
 									</td>
 									</tr>
 									<?php } ?>
@@ -215,7 +232,7 @@
 			</div>
 			<div class="modal-body relative p-4">
 				<!-- input kegiatan -->
-				<form action="<?php echo site_url('home/inputKegiatan'); ?>" method="post" enctype="multipart/form-data">
+				<form action="/home/inputKegiatan" method="post" enctype="multipart/form-data">
 				<div class="grid grid-cols-1 gap-4">
 					<div>
 						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Deskripsi Kegiatan : </label>
@@ -323,13 +340,22 @@
         ]
       });
 	  $(document).ready(function () {
+				// $.fn.dataTable.moment('DD/MM/YY');
                 $('#dataTable').DataTable({
                     dom: 'Bfrtip',
+					order: [[6, 'desc']],
+					"ordering" : false,
                     scrollX: 200,
+					buttons: [
+						
+					]
+					// "columnDefs" : [{"targets":3, "type":"date-eu"}],
                 });
             });
     </script>
 	<?php $this->load->view('template/footer'); ?>
+	
+		<script src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>
 		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>

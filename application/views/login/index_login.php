@@ -1,6 +1,6 @@
 <?php $this->load->view('template/header'); ?>
 
-    <div id="content" class="">
+    <div id="content" class="mx-3">
 		<div class="flex items-center justify-center h-screen -mb-14 transition-all">
         <!-- Login Form -->
 			<div class="logo flex items-center justify-center flex-col">
@@ -14,7 +14,7 @@
 					<?php
 					echo $this->session->flashdata('success'); 
 					?>
-					<form action="<?php echo site_url('User/aksi_login'); ?>" method="post">
+					<form action="/User/aksi_login" method="post">
 						<div class="mt-4">
 							<div>
 								<label class="block text-slate-600" for="username">NIP<label>

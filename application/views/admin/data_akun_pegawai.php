@@ -13,6 +13,9 @@
                     <div class="flex flex-col">
 						<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
 							<div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+							<?php
+								echo $this->session->flashdata('success'); 
+							?>
 							<div class="overflow-x-auto">
 								<table class="min-w-full display nowrap row-border" id="dataTable" style="width:100%">
 								<thead class="border-b">
@@ -29,6 +32,9 @@
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Unit
 									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Opsi
+									</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -44,7 +50,25 @@
 									<?= $row->profile_email ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->work_unit ?>
+									<?php
+										if ($row->work_unit == "1") {
+											echo "Direktorat";
+										} else if ($row->work_unit == "2") {
+											echo "Jurusan Keperawatan";
+										} else if ($row->work_unit == "3") {
+											echo "Jurusan Kebidanan";
+										} else if ($row->work_unit == "4") {
+											echo "Jurusan Kesehatan Gigi";
+										} else if ($row->work_unit == "5") {
+											echo "Jurusan Ortotik Prostetik";
+										}
+										
+									?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<a href="/admin/detail_profil/<?=$row->profile_nip?>" class="p-1 pt-2 hover:bg-slate-600 hover:scale-125 bg-sky-600 w-10 rounded-lg text-white transition-all">
+										<ion-icon name="person"></ion-icon>
+									</a>
 									</td>
 									</tr>
 									<?php } ?>

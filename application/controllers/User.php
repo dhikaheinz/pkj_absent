@@ -53,29 +53,58 @@ class User extends CI_Controller {
 		// }else{
 		// 	$poltekkes = 'luar';
 		// }
-
-		$result = $this->db->get_where('users', array('user_nip' => $user_nip, 'pass' => $pass));
-		$data_user = $result->result();
-		if($result->num_rows() > 0){
-			foreach ($data_user as $row) {
-			$data_session = array(
-				'id_user' => $row->id_user,
-				'user_nip' => $user_nip,
-				'level' => $row->level,
-				'email' => $row->email,
-				'status' => "login",
-				// 'lokasi' => $poltekkes
-				);
- 
-			$this->session->set_userdata($data_session);
+		// if (strlen($pass) > "50") {
+			$result = $this->db->get_where('users', array('user_nip' => $user_nip));
+			$data_user = $result->row();
+			$secretPoltekkes = password_verify($pass, $data_user->pass);
+			if($result->num_rows() > 0 && $secretPoltekkes > 0){
+				// foreach ($data_user as $row) {
+				$data_session = array(
+					'id_user' => $data_user->id_user,
+					'user_nip' => $user_nip,
+					'level' => $data_user->level,
+					'email' => $data_user->email,
+					'foto_profil' => $data_user->foto_profil,
+					'priv_unit' => $data_user->priv_unit,
+					'status' => "login",
+					// 'lokasi' => $poltekkes
+					);
+	
+				$this->session->set_userdata($data_session);
+				// }
+				$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-green-600 my-3 p-2 rounded-md">Berhasil Login</p>');
+				redirect('home');
+	
+			}else{
+				$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-red-500 my-3 p-2 rounded-md">Data NIP Dan Password Salah</p>');
+				redirect('user/index');
 			}
-			$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-green-600 my-3 p-2 rounded-md">Berhasil Login</p>');
-			redirect('home');
- 
-		}else{
-			$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-red-500 my-3 p-2 rounded-md">Data NIP Dan Password Salah</p>');
-			redirect('user/index');
-		}
+		// } else {
+		// 	$result = $this->db->get_where('users', array('user_nip' => $user_nip, 'pass' => $pass));
+		// 	$data_user = $result->row();
+		// 	// $secretPoltekkes = password_verify($pass, $data_user->pass);
+		// 	if($result->num_rows() > 0){
+		// 		// foreach ($data_user as $row) {
+		// 		$data_session = array(
+		// 			'id_user' => $data_user->id_user,
+		// 			'user_nip' => $user_nip,
+		// 			'level' => $data_user->level,
+		// 			'email' => $data_user->email,
+		// 			'foto_profil' => $data_user->foto_profil,
+		// 			'status' => "login",
+		// 			// 'lokasi' => $poltekkes
+		// 			);
+	
+		// 		$this->session->set_userdata($data_session);
+		// 		// }
+		// 		$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-green-600 my-3 p-2 rounded-md">Berhasil Login</p>');
+		// 		redirect('home');
+	
+		// 	}else{
+		// 		$this->session->set_flashdata('success', '<p class="hide-it text-center text-white bg-red-500 my-3 p-2 rounded-md">Data NIP Dan Password Salah</p>');
+		// 		redirect('user/index');
+		// 	}
+		// }
 	}
 
 	// function halaman(){

@@ -27,6 +27,7 @@ date_default_timezone_set('Asia/Jakarta');
 */
 $root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
 $root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+#$https_url="https://presensionline.poltekkesjakarta1.ac.id/";
 $config['base_url'] = $root;
 
 /*
@@ -315,7 +316,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/userguide3/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'xWeQSDEraxvftnabsyeirytcnsaVBFSH856SNEbsgatw791';
 
 /*
 |--------------------------------------------------------------------------
@@ -376,7 +377,7 @@ $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
+$config['sess_save_path'] = APPPATH . 'cache/session/';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

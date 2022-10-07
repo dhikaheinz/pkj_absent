@@ -1,6 +1,6 @@
 <?php $this->load->view('template/header'); ?>
 
-    <div id="content" class="">
+    <div id="content" class="mt-10 pl-48 pr-48">
 		<div class="flex items-center justify-center min-h-screen h-auto transition-all">
 			<!-- flex content -->
 			<div class="dashboard flex items-center justify-center rounded-lg flex-col md:flex-row gap-3 transition-all my-24 md:my-0">
@@ -33,16 +33,22 @@
 									Rekam Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Keluar
+									Masuk
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Loc Keluar
+									Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
-									Deskripsi Kegiatan
+									Status Masuk
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Status Keluar
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									Status
+									</th>
+									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
+									Deskripsi Kegiatan
 									</th>
 									<th scope="col" class="text-sm font-bold text-gray-900 px-6 py-2 text-left">
 									File
@@ -76,7 +82,7 @@
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 										<?php
 										if (!empty($row->location_entry)) {
-											echo '<a href="https://google.com/maps/place/'.$row->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Lokasi 📌</a>';
+											echo '<a href="https://google.com/maps/place/'.$row->location_entry.'" target="_blank" class="-ml-1 p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">Lokasi</a>';
 										} else {
 											echo '';
 										}
@@ -85,42 +91,75 @@
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?php
 										if (!empty($row->location_return)) {
-											echo '<a href="https://google.com/maps/place/'.$row->location_return.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">&nbsp;Lokasi 📌</a>';
+											echo '<a href="https://google.com/maps/place/'.$row->location_return.'" target="_blank" class="-ml-1 p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">Lokasi</a>';
 										} else {
 											echo '';
 										}
 										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<?= $row->job_desc ?>
+										<?php 
+											if ($row->status_absen_masuk == "1") {
+												echo 'Masuk (Dalam)';
+											} else if ($row->status_absen_masuk == "2") {
+												echo 'Dinas Luar';
+											} else if ($row->status_absen_masuk == "3") {
+												echo 'Izin';
+											}else if ($row->status_absen_masuk == "4") {
+												echo 'Sakit';
+											}else if ($row->status_absen_masuk == "5") {
+												echo 'Bimbingan';
+											}else if ($row->status_absen_masuk == "6") {
+												echo 'Penelitian';
+											}else if ($row->status_absen_masuk == "7") {
+												echo 'Pengabdian Masyarakat';
+											}
+											?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+										<?php 
+											if ($row->status_absen_keluar == "1") {
+												echo 'Masuk (Dalam)';
+											} else if ($row->status_absen_keluar == "2") {
+												echo 'Dinas Luar';
+											} else if ($row->status_absen_keluar == "3") {
+												echo 'Izin';
+											}else if ($row->status_absen_keluar == "4") {
+												echo 'Sakit';
+											}else if ($row->status_absen_keluar == "5") {
+												echo 'Bimbingan';
+											}else if ($row->status_absen_keluar == "6") {
+												echo 'Penelitian';
+											}else if ($row->status_absen_keluar == "7") {
+												echo 'Pengabdian Masyarakat';
+											}else if ($row->status_absen_keluar == "10") {
+												echo 'Belum Absen';
+											}else if ($row->status_absen_keluar == "20") {
+												echo 'Masuk (Luar)';
+											}
+											?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									<?php 
-											if ($row->status_absent == "1") {
-												echo 'Masuk';
-											} else if ($row->status_absent == "2") {
-												echo 'Dinas Luar';
-											} else if ($row->status_absent == "3") {
-												echo 'Izin';
-											}else if ($row->status_absent == "4") {
-												echo 'Sakit';
-											}else if ($row->status_absent == "5") {
-												echo 'Bimbingan';
-											}else if ($row->status_absent == "6") {
-												echo 'Penelitian';
-											}else if ($row->status_absent == "7") {
-												echo 'Pengabdian Masyarakat';
+											if ($row->absen_ket == "1") {
+												echo '<span class="p-1 bg-teal-600 text-white rounded-md">OnTime</span>';
+											} else if ($row->absen_ket == "2") {
+												echo '<span class="p-1 bg-yellow-600 text-white rounded-md">Kompensasi</span>';
+											} else if ($row->absen_ket == "3") {
+												echo '<span class="p-1 bg-orange-600 text-white rounded-md">Terlambat</span>';
 											}
-										?>
+											?>
+									</td>
+									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+									<?= $row->job_desc ?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 										<?php 
 										if ($row->id_job) {
-											echo '<a href="'.base_url('home/lihatfile/'.$row->id_job).'"><i class="ace-icon fa fa-download text-info"></i></a>';
+											echo '<a href="'.base_url('home/lihatfile/'.$row->id_job).'"><i class="fa fa-file" aria-hidden="true"></i></a>';
 										} else {
 											# code...
 										}
-										
 										?>
 									</td>
 									</tr>
@@ -165,7 +204,12 @@
 			$(document).ready(function () {
                 $('#dataTable').DataTable({
                     dom: 'Bfrtip',
+					order: [[0, 'desc']],
+					"ordering" : false,
                     scrollX: 200,
+					buttons: [
+						'excel', 'pdf'
+					]
                 });
             });
 		</script>

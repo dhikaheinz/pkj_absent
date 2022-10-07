@@ -40,7 +40,7 @@
 			btnKegiatanFile.classList.add("hover:bg-slate-400");
 			btnKegiatanFile.classList.remove("bg-slate-400");
 			btnKegiatanFile.classList.remove("cursor-not-allowed");
-			btnKegiatanFile.classList.add("bg-[#64b3f4]");
+			btnKegiatanFile.classList.add("bg-[#a2c082]");
 			btnKegiatanFile.disabled = false;
 			// btnMasuk.classList.add("hover:bg-slate-400");
 
@@ -48,7 +48,7 @@
 				btnKeluar.classList.add("hover:bg-slate-400");
 				btnKeluar.classList.remove("bg-slate-400");
 				btnKeluar.classList.remove("cursor-not-allowed");
-				btnKeluar.classList.add("bg-[#64b3f4]");
+				btnKeluar.classList.add("bg-[#a2c082]");
 				btnKeluar.disabled = false;	
 			}
 		}
@@ -70,7 +70,7 @@
         //Fungi ajax untuk Menampilkan Jam dengan mengakses File ajax_timestamp.php
         function timestamp() {
             $.ajax({
-                url: '<?= base_url('assets/php/ajax_timestamp.php') ?>',
+                url: '/assets/php/ajax_timestamp.php',
                     success: function(data) {
                     $('#timestamp').html(data);
                 },
@@ -133,13 +133,13 @@
 				btnKegiatan.classList.remove("hover:bg-slate-400");
 				btnKegiatan.classList.add("bg-slate-400");
 				btnKegiatan.classList.add("cursor-not-allowed");
-				btnKegiatan.classList.remove("bg-[#64b3f4]");
+				btnKegiatan.classList.remove("bg-[#a2c082]");
 				btnKegiatan.disabled = true;
 			} else {
 				btnKegiatan.classList.add("hover:bg-slate-400");
 				btnKegiatan.classList.remove("bg-slate-400");
 				btnKegiatan.classList.remove("cursor-not-allowed");
-				btnKegiatan.classList.add("bg-[#64b3f4]");
+				btnKegiatan.classList.add("bg-[#a2c082]");
 				btnKegiatan.disabled = false;
 			}
 			// btnMasuk.classList.add("hover:bg-slate-400");
@@ -156,7 +156,12 @@
 		}
 
 		function closeSidePulang(){
-			var modal = document.getElementById("notifKeluar");
+			var modal = document.getElementById("notifInfoPulang");
+			modal.classList.add("hidden");
+		}
+
+		function closeSidePeringatan(){
+			var modal = document.getElementById("notifInfoLokasi");
 			modal.classList.add("hidden");
 		}
 

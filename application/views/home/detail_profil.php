@@ -41,19 +41,35 @@
 							Profil Pegawai
 						</div>
                         <div class="konten-profil flex items-start justify-center pl-3 md:items-start md:justify-start flex-col md:flex-row shadow-md py-5 transition-all">
-							<form action="<?php echo site_url('home/update_profil/'.$get_data_profil->id_user.''); ?>" method="post">
+							<form action="/home/update_profil/<?=$get_data_profil->id_user?>" method="post" enctype="multipart/form-data">
                             <div class="grid grid-cols-2 gap-4 w-full my-3">
                                 <div>User NIP</div>
                                 <div><input type="text" name="user_nip" value="<?= $get_data_profil->user_nip ?>" class="w-full px-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 shadow-sm"></div>
                                 <div>Password</div>
-                                <div><input type="password" name="pass" value="<?= $get_data_profil->pass ?>" class="w-full px-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 shadow-sm"></div>
+                                <div><input type="password" name="pass" value="" class="w-full px-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 shadow-sm"></div>
                                 <div>Email</div>
                                 <div><input type="email" name="email" value="<?= $get_data_profil->email ?>" class="w-full px-1 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 shadow-sm"></div>
+                                <div>Foto Profil</div>
+                                <div><input class="form-control
+									block
+									w-full
+									px-2
+									py-1
+									text-sm
+									font-normal
+									text-gray-700
+									bg-white bg-clip-padding
+									border border-solid border-gray-300
+									rounded
+									transition
+									ease-in-out
+									m-0
+									focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="foto_profil" type="file" name='files' accept="image/*"></div>
                             </div>
 						</div>
 					</div>
 					<div class="flex items-start justify-start flex-row mt-5 gap-1 transition-all">
-						<a href="<?= base_url('home') ?>" class="bg-sky-400 text-white p-2 rounded-md hover:bg-slate-400 transition-all">Kembali</a>
+						<a href="/home" class="bg-sky-400 text-white p-2 rounded-md hover:bg-slate-400 transition-all">Kembali</a>
                         <button type="submit" class="bg-blue-500 text-white p-2 rounded-md hover:bg-slate-400 transition-all">Update Data</a>
 					</div>
 					</form>

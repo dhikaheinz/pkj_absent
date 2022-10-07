@@ -40,7 +40,7 @@
 										<?php
 										foreach($data_doc as $doc){
 											if (!empty($doc)) {
-												echo '<div class="mb-3"><a href="'.site_url($doc['doc_file_ket']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all h-10">Lihat File</a><a href="'.site_url('home/deleteDoc/'.$doc['id_doc'].'').'" class=" ml-3 p-1 bg-red-500 w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
+												echo '<div class="mb-3"><a href="/'.$doc['doc_file_ket'].'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all h-10">Lihat File</a><a href="/home/deleteDoc/'.$doc['id_doc'].'" class=" ml-3 p-1 bg-[#a2c082] w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
 												} else {
 													echo 'Kosong';
 												}
@@ -51,7 +51,7 @@
 										<?php
 										foreach($data_foto as $foto){
 											if (!empty($foto)) {
-												echo '<div class="mb-3"><a href="'.site_url($foto['foto_file']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><a href="'.site_url('home/deleteFoto/'.$foto['id_foto'].'').'" class=" ml-3 p-1 bg-red-500 w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
+												echo '<div class="mb-3"><a href="/'.$foto['foto_file'].'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><a href="/home/deleteFoto/'.$foto['id_foto'].'" class=" ml-3 p-1 bg-[#a2c082] w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
 												} else {
 													echo 'Kosong';
 												}
@@ -148,7 +148,7 @@
 			</div>
 			<div class="modal-body relative p-4">
 				<!-- input kegiatan -->
-				<form action="<?php echo site_url('home/inputKegiatan'); ?>" method="post" enctype="multipart/form-data">
+				<form action="/home/inputKegiatan" method="post" enctype="multipart/form-data">
 				<div class="grid grid-cols-1 gap-4">
 					<div>
 						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Deskripsi Kegiatan : </label>

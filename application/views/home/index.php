@@ -4,115 +4,130 @@
 		<div class="flex items-center justify-center md:h-screen -mt-14 md:mt-5 transition-all">
 			<!-- flex content -->
 			<div class="dashboard flex items-center justify-center rounded-lg flex-col md:flex-row gap-3 transition-all mt-48 mb-20 md:my-0">
+			<div class="hidden lg:block">
 				<div class="profil-detail flex items-center justify-center flex-col w-96 md:w-96 px-6 pb-6 shadow-lg rounded-lg bg-white">
 					<!-- <div class="nama-profil mt-2 self-end">
-						  <a href="" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all"><ion-icon name="create-outline" class="text-2xl"></ion-icon></a>
+						<a href="" class="text-white px-1 pb-1 pt-3 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all"><ion-icon name="create-outline" class="text-2xl"></ion-icon></a>
 					</div> -->
 					<div class="nama-profil mt-2 self-end">
-						  <a href="<?= base_url('home/detail_profil') ?>" class="text-white px-1 pb-1 pt-1 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all">Edit Profil <ion-icon name="create-outline" class="text-lg"></ion-icon></a>
+						<a href="/home/detail_profil" class="text-white px-1 pb-1 pt-1 bg-[#3BACB6] rounded-md hover:bg-slate-400 transition-all">Edit Profil <ion-icon name="create-outline" class="text-lg"></ion-icon></a>
 					</div>
 					<div class="foto-profil h-30 w-30 rounded-full bg-slate-100 mt-5">
-						<img src="https://icon-library.com/images/person-image-icon/person-image-icon-2.jpg" alt="" class="rounded-full w-28 h-28">
+						<img src="/<?= $this->session->userdata('foto_profil') ?>" alt="" class="rounded-full w-28 h-28">
 					</div>
 	  				<div class="nama-profil mt-2">
 						  <p class="font-bold"><?= $data_pegawai->profile_name ?></p>
+						</div>
+						<div class="nomor-profil">
+							NIP. <?= $data_pegawai->profile_nip ?>
+						</div>
+						<div class="social-media">
+							<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-twitter"></ion-icon></span></a>
+							<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-facebook"></ion-icon></span></a>
+							<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-instagram"></ion-icon></span></a>
+							<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-linkedin"></ion-icon></span></a>
+						</div>
+						<!-- <div class="bg-[#c8dab6] p-2 rounded-md mt-2">
+							<b>Keterangan :</b> <br>
+							Absen masuk dapat dilakukan setelah jam <b>06:00</b>. <br>
+							Absen pulang hanya dapat dilakukan pada jam berikut : <br>
+							1. Senin s.d. Kamis pada pukul <b>15.00</b>, dan <br>
+							2. Jumat pada pukul <b>15.30</b> <br>
+							Unggah file kegiatan online hanya diperbolehkan <b>file gambar (jpg, jpeg, png)</b>. <br>
+						</div> -->
 					</div>
-	  				<div class="nomor-profil">
-						  NIP. <?= $data_pegawai->profile_nip ?>
-					</div>
-					<div class="social-media">
-						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-twitter"></ion-icon></span></a>
-						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-facebook"></ion-icon></span></a>
-						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-instagram"></ion-icon></span></a>
-						<a href="#" class="hover:text-slate-500"><span><ion-icon name="logo-linkedin"></ion-icon></span></a>
-					</div>
-					<!-- <div class="bg-[#c8dab6] p-2 rounded-md mt-2">
-					<b>Keterangan :</b> <br>
-					Absen masuk dapat dilakukan setelah jam <b>06:00</b>. <br>
-					Absen pulang hanya dapat dilakukan pada jam berikut : <br>
-					1. Senin s.d. Kamis pada pukul <b>15.00</b>, dan <br>
-					2. Jumat pada pukul <b>15.30</b> <br>
-					Unggah file kegiatan online hanya diperbolehkan <b>file gambar (jpg, jpeg, png)</b>. <br>
-					</div> -->
 				</div>
-				<div class="profil-detail flex md:items-start md:justify-start flex-col w-96 md:w-[384px] lg:w-[500px] xl:w-[800px] : p-6 shadow-lg rounded-lg bg-white transition-all">
-					<div class="flex md:justify-start flex-col w-full transition-all">
-	  					<div class="title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
-							Rekam Pegawai
-						</div>
-						<?php
-							echo $this->session->flashdata('success'); 
-						?>
-						<div class="mt-5 text-lg text-white p-3 bg-[#64b3f4] rounded-md w-full">
-							Tanggal Saat Ini : <?php date_default_timezone_set("Asia/Bangkok"); echo date("d-m-Y"); ?><br>
-							Waktu Saat Ini : <text id="timestamp"></text>
-						</div>
-						<div id="notifKeluar" class="flex justify-between">
-							<?php 
-								date_default_timezone_set("Asia/Bangkok");
-								$jam = date("H");
-								$menit = date("i");
-								if ($jam >= 15 || $jam <= 6) {
-									echo '<div class="mt-2 text-lg text-white p-3 bg-[#64b3f4] w-full rounded-md">Tidak Bisa Absen Pulang Jika Belum Melakukan Input Kegiatan Harian</div>
-									<div>
-									<button type="button" onclick="closeSidePulang()" class="-ml-7 mt-3 overflow-auto text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
-									<svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-									<span class="sr-only">Close modal</span>
-									</button>
-									</div>';
-								};
+					<div class="sm:-mt-14 mt-0 profil-detail flex md:items-start md:justify-start flex-col w-96 md:w-[384px] lg:w-[500px] xl:w-[800px] : p-6 shadow-lg rounded-lg bg-white transition-all">
+						<div class="flex md:justify-start flex-col w-full transition-all">
+							<div class="uppercase title border-b-2 border-sky-300 font-bold shadow-md text-slate-700 transition-all">
+								Rekam Pegawai
+							</div>
+							<?php
+								echo $this->session->flashdata('success'); 
 							?>
-						</div>
-						<div class="konten-profil flex items-start justify-center md:items-start md:justify-start flex-col md:flex-row mt-5 shadow-md py-5 transition-all">
-							<div class="nomor-antrian ml-3">
-								Rekam Masuk &nbsp;:
+							<div class="mt-5 text-lg text-white p-3 bg-[#64b3f4] rounded-md w-full">
+								Tanggal Saat Ini : <?php date_default_timezone_set("Asia/Bangkok"); echo date("d-m-Y"); ?><br>
+								Waktu Saat Ini : <text id="timestamp"></text>
+							</div>
+							<div id="notifKeluar" class="flex flex-col md:flex-row justify-start w-full">
+								<!-- <div id="notifInfoLokasi" class="flex gap-1 justify-between">
+									<div class="mt-2 text-base text-white p-3 bg-[#e4a92b] w-full rounded-md shadow-md">Anda Berada Di Jaringan Poltekkes</div>
+										<div>
+											<button type="button" onclick="closeSidePeringatan()" class="-ml-7 mt-3 overflow-auto text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
+												<svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+												<span class="sr-only">Close modal</span>
+											</button>
+									</div>
+								</div> -->
 									<?php 
-									if(!empty($data_absent->attendance_entry)){
-										echo '<span class="p-1 m-2 bg-blue-500 rounded-md text-white">'.$data_absent->attendance_entry.'</span>';
-										}else{
-											date_default_timezone_set("Asia/Bangkok");
-											// $jam = date("H");
-											// $menit = date("i");
-											// if ($jam >= 6 && $jam <= 15) {
-												echo '<button type="button" id="btnMasuk" onclick="getLocation()" class="text-white p-1 rounded-md bg-[#64b3f4] hover:bg-slate-500 transition-all" data-bs-toggle="modal" data-bs-target="#AbsenMasuk">Rekam Masuk</button>';
-											// };
-										}
-										 ?>
-										 &nbsp;|&nbsp;
-										 <?php 
-									if(!empty($data_absent->location_entry)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_entry.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">📌</a>';
-										}else{
-										echo "";
-										}
-										?>
+									date_default_timezone_set("Asia/Bangkok");
+									$jam = date("H");
+									$menit = date("i");
+									if (!empty($data_absent->attendance_return)) {
+										echo '';
+									}else{
+										echo '
+										<div id="notifInfoPulang" class="flex gap-0 justify-between w-full">
+										<div class="mt-2 text-base text-white p-3 bg-[#64b3f4] w-full rounded-md shadow-md">Tidak Bisa Absen Pulang Jika Belum Melakukan Input Kegiatan Harian</div>
+										<div>
+										<button type="button" onclick="closeSidePulang()" class="-ml-7 mt-3 overflow-auto text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
+										<svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+										<span class="sr-only">Close modal</span>
+										</button>
+										</div>
+										</div>';
+									};
+									?>
 							</div>
-							<div class="tgl-antrian mt-5 md:mt-0 ml-3">
-								Rekam Pulang :
-								<?php 
-									if(!empty($data_absent->attendance_return)){
-										echo '<span class="p-1 m-2 bg-blue-500 rounded-md text-white">'.$data_absent->attendance_return;'</span>';
-										}else{
-											date_default_timezone_set("Asia/Bangkok");
-											// $jam = date("H");
-											// $menit = date("i");
-											// if ($jam >= 15 || $jam <= 6) {
-												echo '<button type="button" id="btnKeluar" onclick="getLocation()" class="text-white p-1 rounded-md bg-slate-400 cursor-not-allowed transition-all" data-bs-toggle="modal" data-bs-target="#AbsenKeluar" disabled>Absen Keluar</button>';
-											// };
-										}
-										 ?>	
-										</span>&nbsp;|&nbsp;
-										 <?php 
-									if(!empty($data_absent->location_return)){
-										echo '<a href="https://google.com/maps/place/'.$data_absent->location_return.'" target="_blank" class="p-1 m-2 bg-[#64b3f4] rounded-full text-white hover:bg-slate-400">📌</a>';
-										}else{
-										echo "";
-										}
-										 ?>
+							<div class="konten-profil my-1 flex items-start justify-center md:items-start md:justify-start flex-row md:flex-row mt-5 shadow-md transition-all">
+								<div class="masuk ml-3">
+										<?php 
+										if(!empty($data_absent->attendance_entry)){
+											$jam = explode(":",$data_absent->attendance_entry);
+											// print_r($jam);
+											$bgcolor = "";
+											if ($jam[0] >= "07" && $jam[0] <= "08") {
+												$bgcolor = "bg-yellow-500";
+											} else if ($jam[0] >= "08"){
+												$bgcolor = "bg-red-900";
+											}else {
+												$bgcolor = "bg-blue-500";
+											}
+											echo '
+											<div class="">
+											<div class="sm:-mt-5 lg:mt-0 p-[20px] '.$bgcolor.' rounded-md text-white">'.$data_absent->attendance_entry.'</div>
+											</div>
+											';
+											}else{
+												date_default_timezone_set("Asia/Bangkok");
+												// $jam = date("H");
+												// $menit = date("i");
+												// if ($jam >= 6 && $jam <= 15) {
+													echo '<button type="button" id="btnMasuk" onclick="getLocation()" class="text-white p-5 rounded-md bg-[#a2c082] hover:bg-slate-500 transition-all" data-bs-toggle="modal" data-bs-target="#AbsenMasuk">Rekam Masuk</button>';
+												// };
+											}
+											?>
+								</div>
+								<div class="keluar ml-2">
+									<?php 
+										if(!empty($data_absent->attendance_return)){
+											echo '<div class="lg:-mt-0 p-5 bg-blue-500 rounded-md text-white">'.$data_absent->attendance_return.'</div>';
+											}else{
+												date_default_timezone_set("Asia/Bangkok");
+												$jam = date("H");
+												$menit = date("i");
+												if ($jam >= 15 || $jam <= 6) {
+													echo '<button type="button" id="btnKeluar" onclick="getLocation()" class="text-white p-5 rounded-md bg-slate-400 cursor-not-allowed transition-all" data-bs-toggle="modal" data-bs-target="#AbsenKeluar" disabled>Rekam Keluar</button>';
+												}else{
+													echo '<button type="button" id="btnKeluar" onclick="getLocation()" class="text-white p-5 rounded-md bg-slate-400 cursor-not-allowed transition-all" disabled>Absen Keluar</button>';
+												};
+											}
+											?>	
+								</div>
+								<!-- <p id="demo"></p> -->
 							</div>
-							<!-- <p id="demo"></p> -->
-						</div>
-						<?php //} ?>
+							<?php //} ?>
+						
 					</div>
 							<!-- absen masuk  -->
 
@@ -130,7 +145,7 @@
 						<!-- absen keluar -->
 						
 						<!-- absen keluar -->
-					</div>
+						</div>
 					<div class="konten-profil mt-2 shadow-md py-5 transition-all w-full">
 					<div class="flex flex-col">
 						<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -169,7 +184,7 @@
 										<?php
 										foreach($get_data_doc as $doc){
 											if (!empty($doc)) {
-												echo '<div class="mb-3"><a href="'.site_url($doc['doc_file_ket']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all h-10">Lihat File</a><a href="'.site_url('home/deleteDoc/'.$doc['id_doc'].'').'" class=" ml-3 p-1 bg-red-500 w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
+												echo '<div class="my-1"><a href="/'.$doc['doc_file_ket'].'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all h-10">Lihat File</a><a href="/home/deleteDoc/'.$doc['id_doc'].'" class="ml-1 px-1 pt-[4px] bg-[#a2c082] w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
 												} else {
 													echo 'Kosong';
 												}
@@ -180,7 +195,7 @@
 										<?php
 										foreach($get_data_foto as $foto){
 											if (!empty($foto)) {
-												echo '<div class="mb-3"><a href="'.site_url($foto['foto_file']).'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><a href="'.site_url('home/deleteFoto/'.$foto['id_foto'].'').'" class=" ml-3 p-1 bg-red-500 w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
+												echo '<div class="my-1"><a href="/'.$foto['foto_file'].'" title="" target="_blank" class="hover:text-white hover:p-1 hover:bg-sky-600 rounded-md transition-all">Lihat Foto</a><a href="/home/deleteFoto/'.$foto['id_foto'].'" class="ml-1 px-1 pt-[4px] bg-[#a2c082] w-4 h-4 rounded-md hover:bg-slate-500 text-white"><ion-icon name="trash" class="m-auto"></ion-icon></a><br></div>';
 												} else {
 													echo 'Kosong';
 												}
@@ -188,7 +203,7 @@
 										?>
 									</td>
 									<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-									<button  title="" data-bs-toggle="modal" data-bs-target="#editKegiatan" class="text-white p-1 bg-red-600 rounded-md transition-all">Edit</a><br>
+									<button  title="" data-bs-toggle="modal" data-bs-target="#editKegiatan" class="text-white p-1 bg-[#a2c082] hover:bg-slate-500 rounded-md transition-all">Edit</a><br>
 									</td>
 									</tr>
 									<?php } ?>
@@ -200,7 +215,7 @@
 						</div>
 					</div>
 					<!-- lihat semua kegiatan  -->
-					<a href="<?= site_url('home/lihatKegiatan') ?>" class="mt-3 bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all">Lihat Kegiatan</a>
+					<a href="/home/lihatKegiatan" class="mt-3 bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all">Lihat Kegiatan</a>
 					<!-- lihat semua kegiatan  -->
 				</div>
 				<div id="closeModal" class="profil-detail flex flex-col w-96 md:w-[300px] p-3 shadow-lg rounded-lg bg-white transition-all">
@@ -252,7 +267,7 @@
 				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
 				<button type="button" class="px-6
 				py-2.5
-				bg-red-600
+				bg-[#a2c082]
 				text-white
 				font-medium
 				text-xs
@@ -266,7 +281,7 @@
 				transition
 				duration-150
 				ease-in-out" data-bs-dismiss="modal">Tutup</button>
-				<form action="<?php echo site_url('home/absentMasuk'); ?>" method="post">
+				<form action="/home/absentMasuk" method="post">
 						<input id="lokasi_user_masuk" name="lokasi_user" type="text" value="" hidden>
 							<!-- <div class="flex items-center justify-center flex-row mt-5 gap-1 transition-all"> -->
 							<!-- <button id="getLocBtn" type="button" onclick="getLocation()" class="bg-[#64b3f4] text-white p-2 rounded-md hover:bg-slate-400 transition-all" data-bs-toggle="modal" data-bs-target="#exampleModal">Konfirmasi Lokasi</button> -->
@@ -287,7 +302,7 @@
 				transition
 				duration-150
 				ease-in-out
-				ml-1" data-bs-dismiss="modal">Konfirmasi Absen Masuk</button>
+				ml-1" data-bs-dismiss="modal">Konfirmasi Rekap Masuk</button>
 				</form>
 			</div>
 			</div>
@@ -319,7 +334,7 @@
 				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
 				<button type="button" class="px-6
 				py-2.5
-				bg-red-600
+				bg-[#a2c082]
 				text-white
 				font-medium
 				text-xs
@@ -336,7 +351,7 @@
 				<form action="
 						<?php 
 						if(!empty($data_absent->id_absent)){
-							echo site_url('home/absentKeluar/'.$data_absent->id_absent.'');
+							echo '/home/absentKeluar/'.$data_absent->id_absent;
 							}else{
 							echo "";
 							} 
@@ -358,7 +373,7 @@
 				transition
 				duration-150
 				ease-in-out
-				ml-1" data-bs-dismiss="modal">Konfirmasi Absen Keluar</button>
+				ml-1" data-bs-dismiss="modal">Konfirmasi Rekap Keluar</button>
 				</form>
 				</div>
 			</div>
@@ -379,7 +394,7 @@
 			</div>
 			<div class="modal-body relative p-4">
 				<!-- input kegiatan -->
-				<form action="<?php echo site_url('home/inputKegiatan'); ?>" method="post" enctype="multipart/form-data">
+				<form action="/home/inputKegiatan" method="post" enctype="multipart/form-data">
 				<div class="grid grid-cols-1 gap-4">
 					<div>
 						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Deskripsi Kegiatan : </label>
@@ -427,7 +442,7 @@
 				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
 				<button type="button" class="px-6
 				py-2.5
-				bg-red-600
+				bg-[#a2c082]
 				text-white
 				font-medium
 				text-xs
@@ -478,7 +493,7 @@
 			</div>
 			<div class="modal-body relative p-4">
 				<!-- input kegiatan -->
-				<form action="<?php echo site_url('home/inputKegiatanFile'); ?>" method="post" enctype="multipart/form-data">
+				<form action="/home/inputKegiatanFile" method="post" enctype="multipart/form-data">
 				<div class="grid grid-cols-1 gap-4">
 					<div>
 					<label for="formFileSm" class="form-label inline-block mb-2 text-gray-700">File Kegiatan (foto):</label>
@@ -534,7 +549,7 @@
 				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
 				<button type="button" class="px-6
 				py-2.5
-				bg-red-600
+				bg-[#a2c082]
 				text-white
 				font-medium
 				text-xs
@@ -585,7 +600,7 @@
 			</div>
 			<div class="modal-body relative p-4">
 				<!-- input kegiatan -->
-				<form action="<?php echo site_url('home/editKegiatan/'.$data_today_row->id_job.''); ?>" method="post" enctype="multipart/form-data">
+				<form action="/home/editKegiatan/<?=$data_today_row->id_job?>" method="post" enctype="multipart/form-data">
 				<div class="grid grid-cols-1 gap-4">
 					<div>
 						<label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700">Deskripsi Kegiatan : </label>
@@ -633,7 +648,7 @@
 				class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
 				<button type="button" class="px-6
 				py-2.5
-				bg-red-600
+				bg-[#a2c082]
 				text-white
 				font-medium
 				text-xs
